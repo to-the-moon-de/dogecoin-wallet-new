@@ -4,7 +4,7 @@
 	package="de.schildbach.wallet_test"
 	android:installLocation="internalOnly"
 	android:versionCode="151"
-	android:versionName="3.30-test" >
+	android:versionName="3.30-bitcoinj0.11-test" >
 
 	<uses-sdk
 		android:minSdkVersion="10"
