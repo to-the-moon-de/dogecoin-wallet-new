@@ -236,7 +236,7 @@ public abstract class InputParser
 
 		final long amount = output.getAmount();
 
-		handlePaymentIntent(new PaymentIntent(script.getToAddress(Constants.NETWORK_PARAMETERS), paymentDetails.getMemo(),
+		handlePaymentIntent(new PaymentIntent(PaymentIntent.BIP.BIP70, script.getToAddress(Constants.NETWORK_PARAMETERS), paymentDetails.getMemo(),
 				amount != 0 ? BigInteger.valueOf(amount) : null, bluetoothMac));
 	}
 

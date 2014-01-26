@@ -40,6 +40,14 @@ import de.schildbach.wallet.util.GenericUtils;
  */
 public final class PaymentIntent implements Parcelable
 {
+	public enum BIP
+	{
+		BIP21, BIP70
+	}
+
+	@CheckForNull
+	public final BIP bip;
+
 	@CheckForNull
 	public final BigInteger amount;
 
@@ -53,17 +61,18 @@ public final class PaymentIntent implements Parcelable
 
 	public PaymentIntent(@Nonnull final Address address)
 	{
-		this(address, null, null, null);
+		this(null, address, null, null, null);
 	}
 
 	public PaymentIntent(@Nonnull final String address, @Nullable final String addressLabel) throws WrongNetworkException, AddressFormatException
 	{
-		this(new Address(Constants.NETWORK_PARAMETERS, address), addressLabel, null, null);
+		this(null, new Address(Constants.NETWORK_PARAMETERS, address), addressLabel, null, null);
 	}
 
-	public PaymentIntent(@Nonnull final Address address, @Nullable final String addressLabel, @Nullable final BigInteger amount,
-			@Nullable final String bluetoothMac)
+	public PaymentIntent(@Nullable final BIP bip, @Nonnull final Address address, @Nullable final String addressLabel,
+			@Nullable final BigInteger amount, @Nullable final String bluetoothMac)
 	{
+		this.bip = bip;
 		this.amount = amount;
 		this.address = address;
 		this.addressLabel = addressLabel;
@@ -72,7 +81,8 @@ public final class PaymentIntent implements Parcelable
 
 	public PaymentIntent(@Nonnull final BitcoinURI bitcoinUri)
 	{
-		this(bitcoinUri.getAddress(), bitcoinUri.getLabel(), bitcoinUri.getAmount(), (String) bitcoinUri.getParameterByName(Bluetooth.MAC_URI_PARAM));
+		this(PaymentIntent.BIP.BIP21, bitcoinUri.getAddress(), bitcoinUri.getLabel(), bitcoinUri.getAmount(), (String) bitcoinUri
+				.getParameterByName(Bluetooth.MAC_URI_PARAM));
 	}
 
 	public String getAddressString()
@@ -111,6 +121,8 @@ public final class PaymentIntent implements Parcelable
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags)
 	{
+		dest.writeSerializable(bip);
+
 		dest.writeSerializable(amount);
 
 		dest.writeSerializable(address.getParameters());
@@ -138,6 +150,8 @@ public final class PaymentIntent implements Parcelable
 
 	private PaymentIntent(final Parcel in)
 	{
+		bip = (BIP) in.readSerializable();
+
 		amount = (BigInteger) in.readSerializable();
 
 		final NetworkParameters addressParameters = (NetworkParameters) in.readSerializable();
