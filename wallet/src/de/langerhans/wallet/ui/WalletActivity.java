@@ -170,7 +170,12 @@ public final class WalletActivity extends AbstractOnDemandServiceActivity
 					processDirectTransaction(transaction);
 				}
 
-				@Override
+                @Override
+                protected void handlePrivateKeyScan(final ECKey key) {
+                    processPrivareKeyScan(key);
+                }
+
+                @Override
 				protected void error(final int messageResId, final Object... messageArgs)
 				{
 					dialog(WalletActivity.this, null, 0, messageResId, messageArgs);
@@ -199,6 +204,11 @@ public final class WalletActivity extends AbstractOnDemandServiceActivity
 				{
 					processDirectTransaction(tx);
 				}
+
+                @Override
+                protected void handlePrivateKeyScan(final ECKey key) {
+                    processPrivareKeyScan(key);
+                }
 
 				@Override
 				protected void error(final int messageResId, final Object... messageArgs)
