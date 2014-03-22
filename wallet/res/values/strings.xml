@@ -230,6 +230,16 @@
     <string name="sweep_sweep">Sweep</string>
     <string name="sweep_send">Send</string>
     <string name="sweep_activity_title">Sweep key</string>
+    <string name="sweep_hint">This function will \'sweep\' the private key you scanned.\nThis means,
+        that the balance of this key will be transferred to your current default wallet address.\nKeep
+        in mind that you should NOT reuse the scanned key afterwards!</string>
+    <string name="sweep_amount">Key balance</string>
+    <string name="sweep_getbalance_title">Please wait</string>
+    <string name="sweep_getbalance_text">Requesting balance from dogechain.info</string>
+    <string name="sweep_getbalance_failed">Unable to request the balance of this key.\n
+        Please make sure you have a good network connection and try again.</string>
+    <string name="sweep_unconfirmed">The key has an unconfirmed balance of $1%s DOGE and can therefore not be swept yet.\n
+        Please retry to sweep it again in about 5 minutes.</string>
 
 	<!-- generic buttons -->
 	<string name="button_ok">OK</string>

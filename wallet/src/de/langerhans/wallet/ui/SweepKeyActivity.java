@@ -3,17 +3,19 @@ package de.langerhans.wallet.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.google.dogecoin.core.Address;
 import com.google.dogecoin.core.ECKey;
 import de.langerhans.wallet.PaymentIntent;
+import de.langerhans.wallet.R;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author Maximilian Keller
  */
-public class SweepKeyActivity extends SherlockFragmentActivity {
+public class SweepKeyActivity extends AbstractBindServiceActivity {
 
     public static final String INTENT_EXTRA_KEY = "sweep_key";
 
@@ -26,5 +28,11 @@ public class SweepKeyActivity extends SherlockFragmentActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.sweep_key_content);
+
+        getWalletApplication().startBlockchainService(false);
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }
