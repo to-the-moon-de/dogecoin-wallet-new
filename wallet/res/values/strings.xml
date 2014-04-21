@@ -230,7 +230,7 @@
     <string name="sweep_sweep">Sweep</string>
     <string name="sweep_send">Send</string>
     <string name="sweep_activity_title">Sweep key</string>
-    <string name="sweep_hint">This function will \'sweep\' the private key you scanned.\nThis means,
+    <string name="sweep_hint">This function will \'sweep\' the private key you scanned.\nThis means
         that the balance of this key will be transferred to your current default wallet address.\nKeep
         in mind that you should NOT reuse the scanned key afterwards!</string>
     <string name="sweep_amount">Key balance</string>
