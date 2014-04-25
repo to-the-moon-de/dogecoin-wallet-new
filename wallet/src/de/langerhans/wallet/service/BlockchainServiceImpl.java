@@ -730,23 +730,24 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 			{
 				log.info("peergroup not available, not broadcasting transaction " + tx.getHashAsString());
 			}
-		}else if (BlockchainService.ACTION_BROADCAST_SWEEP_TRANSACTION.equals(action))
-        {
-            final Transaction tx = (Transaction) intent.getSerializableExtra(BlockchainService.ACTION_BROADCAST_SWEEP_TRANSACTION_TX);
-
-            if (peerGroup != null)
-            {
-                log.info("broadcasting transaction " + tx.getHashAsString());
-                peerGroup.broadcastTransaction(tx);
-            }
-            else
-            {
-                log.info("peergroup not available, not broadcasting transaction " + tx.getHashAsString());
-            }
-        }
+		}
 
 		return START_NOT_STICKY;
 	}
+
+    @Override
+    public void broadcastSweepTransaction(@Nonnull Transaction tx) {
+        if (peerGroup != null)
+        {
+            log.info("broadcasting transaction " + tx.getHashAsString());
+            //tx = peerGroup.getMemoryPool().intern(tx);
+            peerGroup.broadcastTransaction(tx);
+        }
+        else
+        {
+            log.info("peergroup not available, not broadcasting transaction " + tx.getHashAsString());
+        }
+    }
 
 	@Override
 	public void onDestroy()

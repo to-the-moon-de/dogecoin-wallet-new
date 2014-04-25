@@ -2,15 +2,11 @@ package de.langerhans.wallet.ui;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.*;
 import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
+import android.os.*;
 import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -27,6 +23,8 @@ import com.google.dogecoin.crypto.TransactionSignature;
 import com.google.dogecoin.script.Script;
 import com.google.dogecoin.script.ScriptBuilder;
 import de.langerhans.wallet.*;
+import de.langerhans.wallet.service.BlockchainService;
+import de.langerhans.wallet.service.BlockchainServiceImpl;
 import de.langerhans.wallet.util.GenericUtils;
 import de.langerhans.wallet.util.Io;
 import org.json.JSONArray;
@@ -61,6 +59,7 @@ public class SweepKeyFragment extends SherlockFragment {
     private Configuration config;
     private Wallet wallet;
     private LoaderManager loaderManager;
+    private BlockchainService service;
 
     private State state = State.INPUT;
     private Transaction sweepTransaction = null;
@@ -208,6 +207,7 @@ public class SweepKeyFragment extends SherlockFragment {
     {
         if (sweepTransaction != null)
             sweepTransaction.getConfidence().removeEventListener(sweepTransactionConfidenceListener);
+        activity.unbindService(serviceConnection);
         super.onDestroy();
     }
 
@@ -400,17 +400,17 @@ public class SweepKeyFragment extends SherlockFragment {
             updateView();
         }
 
-        Transaction tx = new Transaction(Constants.NETWORK_PARAMETERS);
+        sweepTransaction = new Transaction(Constants.NETWORK_PARAMETERS);
         ArrayList<Script> scripts = new ArrayList<Script>();
         BigInteger fee = BigInteger.ZERO;
 
         for (UnspentOutput out : unspentOutputs)
         {
             Sha256Hash hash = new Sha256Hash(Utils.reverseBytes(Hex.decode(out.getTxHash())));
-            tx.addInput(
+            sweepTransaction.addInput(
                     new TransactionInput(
                             Constants.NETWORK_PARAMETERS,
-                            tx,
+                            sweepTransaction,
                             new byte[]{},
                             new TransactionOutPoint(
                                     Constants.NETWORK_PARAMETERS,
@@ -422,14 +422,32 @@ public class SweepKeyFragment extends SherlockFragment {
             scripts.add(new Script(Hex.decode(out.getScript())));
         }
 
-        fee.add(BigDecimal.valueOf(Math.ceil(tx.bitcoinSerialize().length / 1000)).toBigInteger());
+        fee = fee.add(BigDecimal.valueOf(Math.ceil(sweepTransaction.bitcoinSerialize().length / 1000)).toBigInteger());
 
         Address myAddress = application.determineSelectedAddress();
-        tx.addOutput(balance.subtract(fee), myAddress);
-        signTransactionInputs(tx, Transaction.SigHash.ALL, key, scripts);
-        tx.getConfidence().addEventListener(sweepTransactionConfidenceListener);
-        application.broadcastSweepTransaction(tx);
+        sweepTransaction.addOutput(balance.subtract(fee), myAddress);
+        signTransactionInputs(sweepTransaction, Transaction.SigHash.ALL, key, scripts);
+        sweepTransaction.getConfidence().addEventListener(sweepTransactionConfidenceListener);
+
+        // Now bind to the service so we can broadcast the transaction
+        activity.bindService(new Intent(activity, BlockchainServiceImpl.class), serviceConnection, Context.BIND_AUTO_CREATE);
     }
+
+    private final ServiceConnection serviceConnection = new ServiceConnection()
+    {
+        @Override
+        public void onServiceConnected(final ComponentName name, final IBinder binder)
+        {
+            service = ((BlockchainServiceImpl.LocalBinder) binder).getService();
+            service.broadcastSweepTransaction(sweepTransaction);
+        }
+
+        @Override
+        public void onServiceDisconnected(final ComponentName name)
+        {
+            service = null;
+        }
+    };
 
     // Taken from https://github.com/ksedgwic/Wallet32/blob/master/src/com/bonsai/wallet32/WalletUtil.java
     // TODO: Move this somewehere else!

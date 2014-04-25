@@ -20,10 +20,12 @@ package de.langerhans.wallet.service;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 import com.google.dogecoin.core.Peer;
 import com.google.dogecoin.core.StoredBlock;
 
+import com.google.dogecoin.core.Transaction;
 import de.langerhans.wallet.R;
 /**
  * @author Andreas Schildbach
@@ -53,4 +55,6 @@ public interface BlockchainService
 	List<Peer> getConnectedPeers();
 
 	List<StoredBlock> getRecentBlocks(int maxBlocks);
+
+    void broadcastSweepTransaction(@Nonnull Transaction tx);
 }
