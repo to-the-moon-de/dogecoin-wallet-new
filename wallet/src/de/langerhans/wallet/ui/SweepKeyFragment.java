@@ -381,8 +381,13 @@ public class SweepKeyFragment extends SherlockFragment {
                 String error = activity.getString(R.string.sweep_unconfirmed, GenericUtils.formatValue(unconfBalance, config.getBtcPrecision(), config.getBtcShift()));
                 sweepErorr.setText(error);
             }
-            else
+            else if(balance.signum() == 0 && !(unconfBalance.signum() == 1))
+            {
+                sweepErorr.setText(activity.getString(R.string.sweep_zero));
+            }else
+            {
                 sweepErorr.setText(R.string.sweep_getbalance_failed);
+            }
 
             viewCancel.setText(R.string.send_coins_fragment_button_back);
             viewGo.setText(R.string.send_coins_failed_msg);

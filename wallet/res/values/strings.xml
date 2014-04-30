@@ -236,10 +236,12 @@
     <string name="sweep_amount">Key balance</string>
     <string name="sweep_getbalance_title">Please wait</string>
     <string name="sweep_getbalance_text">Requesting balance from dogechain.info</string>
-    <string name="sweep_getbalance_failed">Unable to request the balance of this key.\n
+    <string name="sweep_getbalance_failed">Unable to request the balance of this key.
         Please make sure you have a good network connection and try again.</string>
-    <string name="sweep_unconfirmed">The key has an unconfirmed balance of $1%s DOGE and can therefore not be swept yet.\n
+    <string name="sweep_unconfirmed">The key has an unconfirmed balance of $1%s DOGE and can therefore not be swept yet.
         Please retry to sweep it again in about 5 minutes.</string>
+    <string name="sweep_zero">The key has a balance of 0 DOGE. If you have just sent coins to it,
+        please wait a few minutes and try again.</string>
 
 	<!-- generic buttons -->
 	<string name="button_ok">OK</string>
