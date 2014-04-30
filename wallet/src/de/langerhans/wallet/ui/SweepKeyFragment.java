@@ -63,6 +63,7 @@ public class SweepKeyFragment extends SherlockFragment {
 
     private State state = State.INPUT;
     private Transaction sweepTransaction = null;
+    private boolean isBound = false;
 
     private CurrencyCalculatorLink amountCalculatorLink;
 
@@ -207,7 +208,8 @@ public class SweepKeyFragment extends SherlockFragment {
     {
         if (sweepTransaction != null)
             sweepTransaction.getConfidence().removeEventListener(sweepTransactionConfidenceListener);
-        activity.unbindService(serviceConnection);
+        if (isBound)
+            activity.unbindService(serviceConnection);
         super.onDestroy();
     }
 
@@ -439,12 +441,14 @@ public class SweepKeyFragment extends SherlockFragment {
         public void onServiceConnected(final ComponentName name, final IBinder binder)
         {
             service = ((BlockchainServiceImpl.LocalBinder) binder).getService();
+            isBound = true;
             service.broadcastSweepTransaction(sweepTransaction);
         }
 
         @Override
         public void onServiceDisconnected(final ComponentName name)
         {
+            isBound = false;
             service = null;
         }
     };
