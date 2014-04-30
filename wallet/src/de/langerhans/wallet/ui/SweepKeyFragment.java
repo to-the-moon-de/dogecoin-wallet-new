@@ -448,6 +448,13 @@ public class SweepKeyFragment extends SherlockFragment {
             service = ((BlockchainServiceImpl.LocalBinder) binder).getService();
             isBound = true;
             service.broadcastSweepTransaction(sweepTransaction);
+            state = State.SENDING;
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateView();
+                }
+            });
         }
 
         @Override
