@@ -406,7 +406,7 @@ public class SweepKeyFragment extends SherlockFragment {
 
         for (UnspentOutput out : unspentOutputs)
         {
-            Sha256Hash hash = new Sha256Hash(Utils.reverseBytes(Hex.decode(out.getTxHash())));
+            Sha256Hash hash = new Sha256Hash(Hex.decode(out.getTxHash()));
             sweepTransaction.addInput(
                     new TransactionInput(
                             Constants.NETWORK_PARAMETERS,
