@@ -32,7 +32,6 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.util.encoders.Hex;
-import sun.security.util.BigInt;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -399,9 +398,6 @@ public class SweepKeyFragment extends SherlockFragment {
 
     private void handleGo()
     {
-        state = State.PREPARATION;
-        updateView();
-
         if (unconfBalance.signum() == 1) {
             state = State.FAILED;
             updateView();
@@ -433,6 +429,10 @@ public class SweepKeyFragment extends SherlockFragment {
 
         Address myAddress = application.determineSelectedAddress();
         sweepTransaction.addOutput(balance.subtract(fee), myAddress);
+
+        state = State.PREPARATION;
+        updateView();
+
         signTransactionInputs(sweepTransaction, Transaction.SigHash.ALL, key, scripts);
         sweepTransaction.getConfidence().addEventListener(sweepTransactionConfidenceListener);
 
