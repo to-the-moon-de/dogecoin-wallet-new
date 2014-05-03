@@ -288,6 +288,10 @@ public final class CurrencyAmountView extends FrameLayout
 				if (nanoCoins.compareTo(Transaction.MIN_NONDUST_OUTPUT) < 0)
 					return false;
 
+                // Too big
+                if (nanoCoins.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
+                    return false;
+
 				return true;
 			}
 		}

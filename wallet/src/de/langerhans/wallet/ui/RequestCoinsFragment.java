@@ -367,13 +367,20 @@ public final class RequestCoinsFragment extends SherlockFragment
 		activity.finish();
 	}
 
+    private byte[] oldRequest;
 	private void updateView()
 	{
 		if (!isResumed())
 			return;
 
 		final String bitcoinRequest = determineBitcoinRequestStr(true);
-		final byte[] paymentRequest = determinePaymentRequest(true);
+        byte[] paymentRequest;
+        try{
+            paymentRequest = determinePaymentRequest(true);
+            oldRequest = paymentRequest;
+        } catch (IllegalArgumentException e) {
+            paymentRequest = oldRequest;
+        }
 
 		// update qr-code
 		final int size = (int) (256 * getResources().getDisplayMetrics().density);
