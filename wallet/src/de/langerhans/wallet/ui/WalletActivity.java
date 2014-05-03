@@ -96,7 +96,8 @@ public final class WalletActivity extends AbstractOnDemandServiceActivity
 	private static final int DIALOG_EXPORT_KEYS = 1;
 	private static final int DIALOG_TIMESKEW_ALERT = 2;
 	private static final int DIALOG_VERSION_ALERT = 3;
-	private static final int DIALOG_LOW_STORAGE_ALERT = 4;
+    private static final int DIALOG_LOW_STORAGE_ALERT = 4;
+    private static final int DIALOG_SWEEP = 5;
 
 	private WalletApplication application;
 	private Configuration config;
@@ -170,7 +171,12 @@ public final class WalletActivity extends AbstractOnDemandServiceActivity
 					processDirectTransaction(transaction);
 				}
 
-				@Override
+                @Override
+                protected void handlePrivateKeyScan(final ECKey key) {
+                    cannotClassify(inputType);
+                }
+
+                @Override
 				protected void error(final int messageResId, final Object... messageArgs)
 				{
 					dialog(WalletActivity.this, null, 0, messageResId, messageArgs);
@@ -199,6 +205,13 @@ public final class WalletActivity extends AbstractOnDemandServiceActivity
 				{
 					processDirectTransaction(tx);
 				}
+
+                @Override
+                protected void handlePrivateKeyScan(final ECKey key) {
+                    Bundle args = new Bundle();
+                    args.putSerializable("key", key);
+                    showDialog(DIALOG_SWEEP, args);
+                }
 
 				@Override
 				protected void error(final int messageResId, final Object... messageArgs)
@@ -352,9 +365,11 @@ public final class WalletActivity extends AbstractOnDemandServiceActivity
 			return createTimeskewAlertDialog(args.getLong("diff_minutes"));
 		else if (id == DIALOG_VERSION_ALERT)
 			return createVersionAlertDialog();
-		else if (id == DIALOG_LOW_STORAGE_ALERT)
-			return createLowStorageAlertDialog();
-		else
+        else if (id == DIALOG_LOW_STORAGE_ALERT)
+            return createLowStorageAlertDialog();
+        else if (id == DIALOG_SWEEP)
+            return createSweepDialog((ECKey)args.getSerializable("key"));
+        else
 			throw new IllegalArgumentException();
 	}
 
@@ -581,6 +596,25 @@ public final class WalletActivity extends AbstractOnDemandServiceActivity
 		final CheckBox showView = (CheckBox) alertDialog.findViewById(R.id.export_keys_dialog_show);
 		showView.setOnCheckedChangeListener(new ShowPasswordCheckListener(new EditText[]{passwordView, passwordRepeatView}));
 	}
+
+    private Dialog createSweepDialog(final ECKey key) {
+        final DialogBuilder dialog = new DialogBuilder(this);
+        dialog.setTitle(R.string.sweep_decide_title);
+        dialog.setMessage(R.string.sweep_decide_text);
+        dialog.setPositiveButton(R.string.sweep_sweep, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SweepKeyActivity.start(WalletActivity.this, key);
+            }
+        });
+        dialog.setNegativeButton(R.string.sweep_send, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, final int id) {
+                SendCoinsActivity.start(WalletActivity.this, PaymentIntent.fromAddress(key.toAddress(Constants.NETWORK_PARAMETERS), ""));
+            }
+        });
+        return dialog.create();
+    }
 
 	private void checkLowStorageAlert()
 	{

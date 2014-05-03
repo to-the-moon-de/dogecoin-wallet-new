@@ -142,9 +142,7 @@ public abstract class InputParser
 				try
 				{
 					final ECKey key = new DumpedPrivateKey(Constants.NETWORK_PARAMETERS, input).getKey();
-					final Address address = new Address(Constants.NETWORK_PARAMETERS, key.getPubKeyHash());
-
-					handlePaymentIntent(PaymentIntent.fromAddress(address, null));
+					handlePrivateKeyScan(key);
 				}
 				catch (final AddressFormatException x)
 				{
@@ -320,6 +318,8 @@ public abstract class InputParser
 
 	protected abstract void handleDirectTransaction(@Nonnull Transaction transaction);
 
+    protected abstract void handlePrivateKeyScan(@Nonnull ECKey key);
+
 	protected abstract void error(int messageResId, Object... messageArgs);
 
 	protected void cannotClassify(@Nonnull final String input)
@@ -339,6 +339,6 @@ public abstract class InputParser
 	}
 
 	private static final Pattern PATTERN_BITCOIN_ADDRESS = Pattern.compile("[" + new String(Base58.ALPHABET) + "]{20,40}");
-	private static final Pattern PATTERN_PRIVATE_KEY = Pattern.compile("6[" + new String(Base58.ALPHABET) + "]{50,51}");
+	private static final Pattern PATTERN_PRIVATE_KEY = Pattern.compile("[Q6][" + new String(Base58.ALPHABET) + "]{50,51}");
 	private static final Pattern PATTERN_TRANSACTION = Pattern.compile("[0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$\\*\\+\\-\\.\\/\\:]{100,}");
 }

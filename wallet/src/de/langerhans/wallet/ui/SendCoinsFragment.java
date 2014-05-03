@@ -86,7 +86,7 @@ import com.google.dogecoin.core.TransactionConfidence.ConfidenceType;
 import com.google.dogecoin.core.Wallet;
 import com.google.dogecoin.core.Wallet.BalanceType;
 import com.google.dogecoin.core.Wallet.SendRequest;
-import com.google.dogecoin.script.ScriptBuilder;
+import com.google.dogecoin.core.ECKey;
 
 import de.langerhans.wallet.AddressBookProvider;
 import de.langerhans.wallet.Configuration;
@@ -671,6 +671,11 @@ public final class SendCoinsFragment extends SherlockFragment
 						cannotClassify(input);
 					}
 
+                    @Override
+                    protected void handlePrivateKeyScan(final ECKey key) {
+                        updateStateFrom(PaymentIntent.fromAddress(key.toAddress(Constants.NETWORK_PARAMETERS), ""));
+                    }
+
 					@Override
 					protected void error(final int messageResId, final Object... messageArgs)
 					{
@@ -1226,6 +1231,11 @@ public final class SendCoinsFragment extends SherlockFragment
 				cannotClassify(input);
 			}
 
+            @Override
+            protected void handlePrivateKeyScan(final ECKey key) {
+                cannotClassify(input);
+            }
+
 			@Override
 			protected void error(final int messageResId, final Object... messageArgs)
 			{
@@ -1249,6 +1259,11 @@ public final class SendCoinsFragment extends SherlockFragment
 			{
 				throw new UnsupportedOperationException();
 			}
+
+            @Override
+            protected void handlePrivateKeyScan(final ECKey key) {
+                throw new UnsupportedOperationException(); // Never called
+            }
 
 			@Override
 			protected void error(final int messageResId, final Object... messageArgs)
@@ -1277,6 +1292,11 @@ public final class SendCoinsFragment extends SherlockFragment
 				{
 					throw new UnsupportedOperationException();
 				}
+
+                @Override
+                protected void handlePrivateKeyScan(final ECKey key) {
+                    throw new UnsupportedOperationException(); // Never called
+                }
 
 				@Override
 				protected void error(final int messageResId, final Object... messageArgs)

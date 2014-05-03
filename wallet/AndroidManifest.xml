@@ -174,8 +174,14 @@
 			android:stateNotNeeded="true"
 			android:theme="@style/My.Theme.Fullscreen"
 			android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="de.langerhans.wallet.ui.SweepKeyActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/sweep_activity_title"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize"/>
 
-		<provider
+        <provider
 			android:name="de.langerhans.wallet.AddressBookProvider"
 			android:authorities="de.langerhans.wallet.address_book"
 			android:exported="false" />

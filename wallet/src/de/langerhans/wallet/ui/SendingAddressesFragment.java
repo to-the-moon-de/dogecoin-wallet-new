@@ -46,6 +46,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.dogecoin.core.Address;
 import com.google.dogecoin.core.AddressFormatException;
+import com.google.dogecoin.core.ECKey;
 import com.google.dogecoin.core.Transaction;
 import com.google.dogecoin.uri.BitcoinURI;
 
@@ -160,6 +161,11 @@ public final class SendingAddressesFragment extends SherlockListFragment impleme
 					cannotClassify(input);
 				}
 
+                @Override
+                protected void handlePrivateKeyScan(final ECKey key) {
+                    cannotClassify(input);
+                }
+
 				@Override
 				protected void error(final int messageResId, final Object... messageArgs)
 				{
@@ -221,6 +227,11 @@ public final class SendingAddressesFragment extends SherlockListFragment impleme
 				{
 					cannotClassify(input);
 				}
+
+                @Override
+                protected void handlePrivateKeyScan(final ECKey key) {
+                    cannotClassify(input);
+                }
 
 				@Override
 				protected void error(final int messageResId, final Object... messageArgs)

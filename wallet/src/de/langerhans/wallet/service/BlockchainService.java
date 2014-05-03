@@ -20,10 +20,12 @@ package de.langerhans.wallet.service;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 import com.google.dogecoin.core.Peer;
 import com.google.dogecoin.core.StoredBlock;
 
+import com.google.dogecoin.core.Transaction;
 import de.langerhans.wallet.R;
 /**
  * @author Andreas Schildbach
@@ -45,10 +47,14 @@ public interface BlockchainService
 	public static final String ACTION_CANCEL_COINS_RECEIVED = BlockchainService.class.getPackage().getName() + ".cancel_coins_received";
 	public static final String ACTION_RESET_BLOCKCHAIN = BlockchainService.class.getPackage().getName() + ".reset_blockchain";
 	public static final String ACTION_BROADCAST_TRANSACTION = BlockchainService.class.getPackage().getName() + ".broadcast_transaction";
-	public static final String ACTION_BROADCAST_TRANSACTION_HASH = "hash";
+    public static final String ACTION_BROADCAST_SWEEP_TRANSACTION = BlockchainService.class.getPackage().getName() + ".broadcast_sweep_transaction";
+    public static final String ACTION_BROADCAST_TRANSACTION_HASH = "hash";
+    public static final String ACTION_BROADCAST_SWEEP_TRANSACTION_TX = "sweep_tx";
 
 	@CheckForNull
 	List<Peer> getConnectedPeers();
 
 	List<StoredBlock> getRecentBlocks(int maxBlocks);
+
+    void broadcastSweepTransaction(@Nonnull Transaction tx);
 }

@@ -27,6 +27,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.dogecoin.core.ECKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,6 +135,11 @@ public abstract class RequestPaymentRequestTask
 									throw new UnsupportedOperationException();
 
 								}
+
+                                @Override
+                                protected void handlePrivateKeyScan(final ECKey key) {
+                                    throw new UnsupportedOperationException(); // Never called
+                                }
 
 								@Override
 								protected void error(final int messageResId, final Object... messageArgs)
