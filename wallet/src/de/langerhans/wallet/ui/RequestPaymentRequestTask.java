@@ -28,6 +28,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.dogecoin.core.ECKey;
+import com.google.dogecoin.protocols.payments.PaymentProtocol;
+import com.google.protobuf.CodedInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -251,7 +253,12 @@ public abstract class RequestPaymentRequestTask
 
 								}
 
-								@Override
+                                @Override
+                                protected void handlePrivateKeyScan(@Nonnull ECKey key) {
+                                    throw new UnsupportedOperationException(); // Not here
+                                }
+
+                                @Override
 								protected void error(final int messageResId, final Object... messageArgs)
 								{
 									onFail(messageResId, messageArgs);
