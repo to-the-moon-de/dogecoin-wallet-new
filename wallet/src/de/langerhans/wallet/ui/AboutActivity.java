@@ -122,7 +122,7 @@ public final class AboutActivity extends SherlockPreferenceActivity
 		}
 		else if (KEY_ABOUT_MARKET_PUBLISHER.equals(key))
 		{
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MARKET_PUBLISHER_URL)));
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(System.getProperty("os.name").equalsIgnoreCase("qnx") ? Constants.MARKET_PUBLISHER_URL_BB : Constants.MARKET_PUBLISHER_URL)));
 			finish();
 		}
 		else if (KEY_ABOUT_CREDITS_BITCOINJ.equals(key))
