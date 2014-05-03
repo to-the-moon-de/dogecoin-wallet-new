@@ -247,7 +247,7 @@
     <string name="sweep_decide_text">Möchtest du an diese Adresse senden, oder das Guthaben übertragen?</string>
     <string name="sweep_sweep">Übertragen</string>
     <string name="sweep_send">Senden</string>
-    <string name="sweep_activity_title">SGuthaben übertragen</string>
+    <string name="sweep_activity_title">Guthaben übertragen</string>
     <string name="sweep_hint">Diese Funktion überträgt das Guthaben des gescannten Schlüssels an deine Wallett.
         Dafür wird das Guthaben an deine Standard-Adresse geschickt.\nBitte beachte, dass du den gescannten
         Schlüssel danach nicht wiederverwenden solltest!\nNetzwerk-Gebühren werden automatisch für dich

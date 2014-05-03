@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.dogecoin.core.Address;
 import com.google.dogecoin.core.ECKey;
 import de.langerhans.wallet.PaymentIntent;
@@ -34,5 +35,18 @@ public class SweepKeyActivity extends AbstractBindServiceActivity {
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
