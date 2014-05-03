@@ -95,7 +95,7 @@ public class Constants
 	public static final String SOURCE_URL = "https://github.com/langerhans/dogecoin-wallet-new";
 	public static final String BINARY_URL = "http://langerhans.github.io/dogecoin-wallet-new/";
 	public static final String CREDITS_BITCOINJ_URL = "https://github.com/langerhans/dogecoinj-new";
-	public static final String CREDITS_ZXING_URL = "http://code.google.com/p/zxing/";
+	public static final String CREDITS_ZXING_URL = "https://github.com/zxing/zxing";
 	public static final String CREDITS_ICON_URL = "http://dogecoin.com/";
 	public static final String AUTHOR_TWITTER_URL = "https://twitter.com/#!/langer_hans";
 	public static final String AUTHOR_GOOGLEPLUS_URL = "https://plus.google.com/+MaximilianKeller";

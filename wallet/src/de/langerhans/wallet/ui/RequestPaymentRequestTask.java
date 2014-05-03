@@ -19,6 +19,7 @@ package de.langerhans.wallet.ui;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -29,14 +30,18 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Looper;
 
 import com.google.dogecoin.core.Transaction;
-import com.google.dogecoin.protocols.payments.PaymentProtocol;
+import com.google.protobuf.CodedOutputStream;
 
 import de.langerhans.wallet.Constants;
 import de.langerhans.wallet.PaymentIntent;
+import de.langerhans.wallet.util.Bluetooth;
 import de.langerhans.wallet.offline.DirectPaymentTask;
 import de.langerhans.wallet.R;
 
@@ -116,7 +121,7 @@ public abstract class RequestPaymentRequestTask
 							new InputParser.StreamInputParser(connection.getContentType(), is)
 							{
 								@Override
-								protected void handlePaymentIntent(@Nonnull PaymentIntent paymentIntent)
+								protected void handlePaymentIntent(@Nonnull final PaymentIntent paymentIntent)
 								{
 									log.info("received {} via http", paymentIntent);
 
@@ -124,14 +129,14 @@ public abstract class RequestPaymentRequestTask
 								}
 
 								@Override
-								protected void handleDirectTransaction(@Nonnull Transaction transaction)
+								protected void handleDirectTransaction(@Nonnull final Transaction transaction)
 								{
 									throw new UnsupportedOperationException();
 
 								}
 
 								@Override
-								protected void error(int messageResId, Object... messageArgs)
+								protected void error(final int messageResId, final Object... messageArgs)
 								{
 									onFail(messageResId, messageArgs);
 								}
@@ -168,6 +173,135 @@ public abstract class RequestPaymentRequestTask
 
 						if (connection != null)
 							connection.disconnect();
+					}
+				}
+			});
+		}
+	}
+
+	public final static class BluetoothRequestTask extends RequestPaymentRequestTask
+	{
+		private final BluetoothAdapter bluetoothAdapter;
+
+		public BluetoothRequestTask(@Nonnull final Handler backgroundHandler, @Nonnull final ResultCallback resultCallback,
+				@Nonnull final BluetoothAdapter bluetoothAdapter)
+		{
+			super(backgroundHandler, resultCallback);
+
+			this.bluetoothAdapter = bluetoothAdapter;
+		}
+
+		@Override
+		public void requestPaymentRequest(@Nonnull final String url)
+		{
+			super.backgroundHandler.post(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					log.info("trying to request payment request from {}", url);
+
+					final BluetoothDevice device = bluetoothAdapter.getRemoteDevice(Bluetooth.decompressMac(Bluetooth.getBluetoothMac(url)));
+
+					BluetoothSocket socket = null;
+					OutputStream os = null;
+					InputStream is = null;
+
+					try
+					{
+						socket = device.createInsecureRfcommSocketToServiceRecord(Bluetooth.BLUETOOTH_UUID_PAYMENT_REQUESTS);
+						socket.connect();
+
+						log.info("connected to {}", url);
+
+						is = socket.getInputStream();
+						os = socket.getOutputStream();
+
+						final CodedInputStream cis = CodedInputStream.newInstance(is);
+						final CodedOutputStream cos = CodedOutputStream.newInstance(os);
+
+						cos.writeInt32NoTag(0);
+						cos.writeStringNoTag(Bluetooth.getBluetoothQuery(url));
+						cos.flush();
+
+						final int responseCode = cis.readInt32();
+
+						if (responseCode == 200)
+						{
+							new InputParser.BinaryInputParser(PaymentProtocol.MIMETYPE_PAYMENTREQUEST, cis.readBytes().toByteArray())
+							{
+								@Override
+								protected void handlePaymentIntent(@Nonnull final PaymentIntent paymentIntent)
+								{
+									log.info("received {} via bluetooth", paymentIntent);
+
+									onPaymentIntent(paymentIntent);
+								}
+
+								@Override
+								protected void handleDirectTransaction(@Nonnull final Transaction transaction)
+								{
+									throw new UnsupportedOperationException();
+
+								}
+
+								@Override
+								protected void error(final int messageResId, final Object... messageArgs)
+								{
+									onFail(messageResId, messageArgs);
+								}
+							}.parse();
+						}
+						else
+						{
+							log.info("got bluetooth error {}", responseCode);
+
+							onFail(R.string.error_bluetooth, responseCode);
+						}
+					}
+					catch (final IOException x)
+					{
+						log.info("problem sending", x);
+
+						onFail(R.string.error_io, x.getMessage());
+					}
+					finally
+					{
+						if (os != null)
+						{
+							try
+							{
+								os.close();
+							}
+							catch (final IOException x)
+							{
+								// swallow
+							}
+						}
+
+						if (is != null)
+						{
+							try
+							{
+								is.close();
+							}
+							catch (final IOException x)
+							{
+								// swallow
+							}
+						}
+
+						if (socket != null)
+						{
+							try
+							{
+								socket.close();
+							}
+							catch (final IOException x)
+							{
+								// swallow
+							}
+						}
 					}
 				}
 			});

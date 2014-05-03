@@ -320,8 +320,6 @@ public final class WalletActivity extends AbstractOnDemandServiceActivity
 	public void handleExportKeys()
 	{
 		showDialog(DIALOG_EXPORT_KEYS);
-
-		config.disarmBackupReminder();
 	}
 
 	private void handleDisconnect()
@@ -520,6 +518,8 @@ public final class WalletActivity extends AbstractOnDemandServiceActivity
                 passwordRepeatView.setText(null);
 
                 exportPrivateKeys(password);
+
+				config.disarmBackupReminder();
 			}
 		});
 		dialog.setNegativeButton(R.string.button_cancel, new OnClickListener()

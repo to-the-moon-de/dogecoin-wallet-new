@@ -35,7 +35,6 @@
 	<string name="wallet_transactions_fragment_internal">פנימי</string>
 	<string name="wallet_transactions_context_show_qr_title">הראה ברקוד</string>
 	<string name="wallet_options_backup">גבה את המפתחות</string>
-	<string name="wallet_options_disconnect">מנותק</string>
 	<string name="wallet_options_safety">הוראות בטיחות</string>
 	<string name="wallet_options_donate">תרומה</string>
 	<string name="wallet_donate_address_label">תרום לארנק ביטקוין</string>
@@ -62,7 +61,7 @@
 	<string name="send_coins_fragment_receiving_address_error">כתובת ביטקוין לא חוקית!</string>
 	<string name="send_coins_fragment_receiving_address_error_cross_network">לא ניתן להשתמש בכתובת %s בארנק זה</string>
 	<string name="send_coins_fragment_receiving_address_error_cross_network_unknown">לא ניתן להשתמש בכתובת  זו ברשת לא ידועה</string>
-	<string name="send_coins_fragment_pending">(DOGE %s waiting for confirmation)</string>
+	<string name="send_coins_fragment_receiving_address_complex">כתובת\nמסובכת</string>
 	<string name="send_coins_fragment_pending">(%s ביטקוין מחכים לאישור)</string>
 	<string name="send_coins_fragment_amount_label">סכום לתשלום</string>
 	<string name="send_coins_fragment_direct_payment_enable">שלח תשלום ישירות לנמען.</string>
@@ -195,9 +194,10 @@
 	<string name="report_issue_dialog_mail_intent_failed">שליחת דו\"ח נכשלה.</string>
 	<string name="about_title">על אודות</string>
 	<string name="about_license_title">רישיון</string>
-	<string name="about_credits_bitcoinj_title">This app is using dogecoinj %s</string>
+	<string name="about_credits_bitcoinj_title">אפליקציה זו משתמשת בbitcoinj %s</string>
 	<string name="about_credits_zxing_title">אפליקציה זו משתמש ב\'zxing\'</string>
-	<string name="about_credits_icon_title">אפליקציה זו משתמשת בסמליל של \'dogecoin.com\'</string>
+	<string name="about_credits_icon_title">אפליקציה זו משתמשת בסמליל של \'bitboy\'</string>
+	<string name="about_community_googleplus_title">קהילת גוגל+</string>
 	<string name="about_community_googleplus_summary">דיונים על אודות האפליקציה</string>
 	<string name="about_author_twitter_title">המחבר בטוויטר</string>
 	<string name="about_author_googleplus_title">המחבר בגוגל+</string>
