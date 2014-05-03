@@ -80,6 +80,8 @@ public class SweepKeyFragment extends SherlockFragment {
 
     private static final Logger log = LoggerFactory.getLogger(SweepKeyFragment.class);
 
+    private static final BigInteger KB_DIVISOR = BigInteger.valueOf(1000);
+
     private static final int ID_RATE_LOADER = 0;
     private enum State
     {
@@ -407,6 +409,13 @@ public class SweepKeyFragment extends SherlockFragment {
         ArrayList<Script> scripts = new ArrayList<Script>();
         BigInteger fee = BigInteger.ZERO;
 
+        // initialize tx size counter
+        BigInteger txSize = BigInteger.ZERO;
+
+        // estimated size of signature
+        // derived from https://github.com/langerhans/dogecoinj-new/blob/master/core/src/main/java/com/google/dogecoin/core/Wallet.java#L3650
+        BigInteger sigSize = BigInteger.valueOf(key.getPubKeyHash().length + 75);
+
         for (UnspentOutput out : unspentOutputs)
         {
             Sha256Hash hash = new Sha256Hash(Hex.decode(out.getTxHash()));
@@ -422,13 +431,34 @@ public class SweepKeyFragment extends SherlockFragment {
                             )
                     )
             );
-            scripts.add(new Script(Hex.decode(out.getScript())));
+
+            byte[] scriptBytes = Hex.decode(out.getScript());
+            scripts.add(new Script(scriptBytes));
+
+            //add script size and signature size for every input to the tx size counter
+            txSize = txSize.add(BigInteger.valueOf(scriptBytes.length)).add(sigSize);
         }
 
-        fee = fee.add(BigDecimal.valueOf(Math.ceil(sweepTransaction.bitcoinSerialize().length / 1000)).toBigInteger());
-
         Address myAddress = application.determineSelectedAddress();
-        sweepTransaction.addOutput(balance.subtract(fee), myAddress);
+
+        // initially, add the full balance to the tx
+        sweepTransaction.addOutput(balance, myAddress);
+
+        // add size of the serialized transaction to the tx
+        // note that this figure by itself excludes scripts and signature data
+        //TODO at this point we are still missing ~18 bytes per input, this should be fixed
+        txSize = txSize.add(BigInteger.valueOf(sweepTransaction.bitcoinSerialize().length));
+
+        // integer division by 1000, rounding up: (x+y-1)/y
+        BigInteger sizeKb = txSize.add(KB_DIVISOR.subtract(BigInteger.ONE)).divide(KB_DIVISOR);
+
+        // calculate fee by multiplying kilobyte size with default_min_tx_fee
+        // note that result is in doge * 1e8
+        fee = fee.add(sizeKb.multiply(Transaction.REFERENCE_DEFAULT_MIN_TX_FEE));
+
+        // Since we always just have one output for a sweep,
+        // we set the value of vout[0] to balance - fee
+        sweepTransaction.getOutput(0).setValue(balance.subtract(fee));
 
         state = State.PREPARATION;
         updateView();
