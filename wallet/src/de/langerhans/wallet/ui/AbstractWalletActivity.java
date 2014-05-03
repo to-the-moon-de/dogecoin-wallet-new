@@ -19,10 +19,6 @@ package de.langerhans.wallet.ui;
 
 import javax.annotation.Nonnull;
 
-import android.content.DialogInterface;
-import com.google.dogecoin.core.ECKey;
-import de.langerhans.wallet.Constants;
-import de.langerhans.wallet.PaymentIntent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,24 +99,4 @@ public abstract class AbstractWalletActivity extends SherlockFragmentActivity
 		toast.setDuration(duration);
 		toast.show();
 	}
-
-    protected void processPrivareKeyScan(@Nonnull final ECKey key)
-    {
-        final DialogBuilder dialog = new DialogBuilder(this);
-        dialog.setTitle(R.string.sweep_decide_title);
-        dialog.setMessage(R.string.sweep_decide_text);
-        dialog.setPositiveButton(R.string.sweep_sweep, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                SweepKeyActivity.start(AbstractWalletActivity.this, key);
-            }
-        });
-        dialog.setNegativeButton(R.string.sweep_send, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(final DialogInterface dialog, final int id) {
-                SendCoinsActivity.start(AbstractWalletActivity.this, PaymentIntent.fromAddress(key.toAddress(Constants.NETWORK_PARAMETERS), ""));
-            }
-        });
-        dialog.show();
-    }
 }

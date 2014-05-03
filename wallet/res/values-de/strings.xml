@@ -242,6 +242,26 @@
 	<string name="notification_coins_received_msg">%s empfangen</string>
 	<string name="notification_peers_connected_msg">%d Peers verbunden</string>
 
+    <!-- sweeping stuff -->
+    <string name="sweep_decide_title">Privater Schlüssel erkannt</string>
+    <string name="sweep_decide_text">Möchtest du an diese Adresse senden, oder das Guthaben übertragen?</string>
+    <string name="sweep_sweep">Übertragen</string>
+    <string name="sweep_send">Senden</string>
+    <string name="sweep_activity_title">SGuthaben übertragen</string>
+    <string name="sweep_hint">Diese Funktion überträgt das Guthaben des gescannten Schlüssels an deine Wallett.
+        Dafür wird das Guthaben an deine Standard-Adresse geschickt.\nBitte beachte, dass du den gescannten
+        Schlüssel danach nicht wiederverwenden solltest!\nNetzwerk-Gebühren werden automatisch für dich
+        berechnet.</string>
+    <string name="sweep_amount">Guthaben</string>
+    <string name="sweep_getbalance_title">Bitte warten.</string>
+    <string name="sweep_getbalance_text">Guthaben wird von dogechain.info abgefragt</string>
+    <string name="sweep_getbalance_failed">Konnte Guthaben nicht abfragen. Stelle sicher, dass
+        du eine gute Netzwerkverbidung hast.</string>
+    <string name="sweep_unconfirmed">Der Schlüssel hat ein unbestätigtes Guthaben von %s DOGE und kann daher noch nicht
+        übertragen werden. Bitte versuche es in 5 Minuten noch einmal.</string>
+    <string name="sweep_zero">Der Schlüssel hat ein Guthaben von 0 DOGE. Falls du ihn eben erst verwendet hast,
+        versuche is in ein paar Minuten noch einmal.</string>
+
 	<!-- generic buttons -->
 	<string name="button_ok">Ok</string>
 	<string name="button_dismiss">Schließen</string>

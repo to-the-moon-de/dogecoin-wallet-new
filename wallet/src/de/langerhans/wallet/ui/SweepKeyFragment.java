@@ -19,12 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.google.dogecoin.core.*;
-import com.google.dogecoin.crypto.TransactionSignature;
 import com.google.dogecoin.script.Script;
-import com.google.dogecoin.script.ScriptBuilder;
 import de.langerhans.wallet.*;
 import de.langerhans.wallet.service.BlockchainService;
 import de.langerhans.wallet.service.BlockchainServiceImpl;
+import de.langerhans.wallet.sweep.SweepHelper;
+import de.langerhans.wallet.sweep.UnspentOutput;
 import de.langerhans.wallet.util.GenericUtils;
 import de.langerhans.wallet.util.Io;
 import org.json.JSONArray;
@@ -37,16 +37,10 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * @author Maximilian Keller
@@ -72,6 +66,7 @@ public class SweepKeyFragment extends SherlockFragment {
     private Button viewCancel;
     private TextView sweepErorr;
 
+    private BalanceRequestTask task;
     private ArrayList<UnspentOutput> unspentOutputs = new ArrayList<UnspentOutput>();
 
     private ECKey key = null;
@@ -92,7 +87,7 @@ public class SweepKeyFragment extends SherlockFragment {
     public void onCreate(final Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override
@@ -183,11 +178,13 @@ public class SweepKeyFragment extends SherlockFragment {
     public void onResume()
     {
         super.onResume();
-        //amountCalculatorLink.setListener(amountsListener);
         loaderManager.initLoader(ID_RATE_LOADER, null, rateLoaderCallbacks);
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         updateView();
-        new BalanceRequestTask().execute(key.toAddress(Constants.NETWORK_PARAMETERS).toString());
+        if (task == null) {
+            task = new BalanceRequestTask();
+            task.execute(key.toAddress(Constants.NETWORK_PARAMETERS).toString());
+        }
     }
 
     @Override
@@ -210,7 +207,9 @@ public class SweepKeyFragment extends SherlockFragment {
         if (sweepTransaction != null)
             sweepTransaction.getConfidence().removeEventListener(sweepTransactionConfidenceListener);
         if (isBound)
-            activity.unbindService(serviceConnection);
+            try {
+                activity.unbindService(serviceConnection);
+            } catch (Exception ignore){} // We probably already unbound earlier.
         super.onDestroy();
     }
 
@@ -224,6 +223,7 @@ public class SweepKeyFragment extends SherlockFragment {
     private void saveInstanceState(final Bundle outState)
     {
         outState.putSerializable("state", state);
+        outState.putBoolean("isBound", isBound);
         if (key != null)
             outState.putSerializable("key", key);
     }
@@ -231,6 +231,7 @@ public class SweepKeyFragment extends SherlockFragment {
     private void restoreInstanceState(final Bundle savedInstanceState)
     {
         state = (State) savedInstanceState.getSerializable("state");
+        isBound = savedInstanceState.getBoolean("isBound");
         if (savedInstanceState.containsKey("key"))
             key = (ECKey)savedInstanceState.getSerializable("key");
     }
@@ -302,28 +303,6 @@ public class SweepKeyFragment extends SherlockFragment {
         }
     };
 
-    private final CurrencyAmountView.Listener amountsListener = new CurrencyAmountView.Listener()
-    {
-        @Override
-        public void changed()
-        {
-            updateView();
-        }
-
-        @Override
-        public void focusChanged(final boolean hasFocus)
-        {
-        }
-    };
-
-    private final DialogInterface.OnClickListener activityDismissListener = new DialogInterface.OnClickListener()
-    {
-        @Override
-        public void onClick(final DialogInterface dialog, final int which)
-        {
-            activity.finish();
-        }
-    };
     private boolean isAmountValid()
     {
         final BigInteger amount = amountCalculatorLink.getAmount();
@@ -372,6 +351,7 @@ public class SweepKeyFragment extends SherlockFragment {
         }
         else if (state == State.SENT)
         {
+            amountCalculatorLink.setBtcAmount(BigInteger.ZERO);
             viewCancel.setText(R.string.send_coins_fragment_button_back);
             viewGo.setText(R.string.send_coins_sent_msg);
         }
@@ -463,11 +443,8 @@ public class SweepKeyFragment extends SherlockFragment {
         state = State.PREPARATION;
         updateView();
 
-        signTransactionInputs(sweepTransaction, Transaction.SigHash.ALL, key, scripts);
-        sweepTransaction.getConfidence().addEventListener(sweepTransactionConfidenceListener);
-
-        // Now bind to the service so we can broadcast the transaction
-        activity.bindService(new Intent(activity, BlockchainServiceImpl.class), serviceConnection, Context.BIND_AUTO_CREATE);
+        // Sign and send
+        new SignAndSendTransactionTask().execute(scripts);
     }
 
     private final ServiceConnection serviceConnection = new ServiceConnection()
@@ -495,89 +472,6 @@ public class SweepKeyFragment extends SherlockFragment {
         }
     };
 
-    // Taken from https://github.com/ksedgwic/Wallet32/blob/master/src/com/bonsai/wallet32/WalletUtil.java
-    // TODO: Move this somewehere else!
-    // Thanks to devrandom!
-    public static void signTransactionInputs(Transaction tx,
-                                             Transaction.SigHash hashType,
-                                             ECKey key,
-                                             List<Script> inputScripts) throws ScriptException {
-
-        List<TransactionInput> inputs = tx.getInputs();
-        List<TransactionOutput> outputs = tx.getOutputs();
-
-        checkState(inputs.size() > 0);
-        checkState(outputs.size() > 0);
-
-        checkArgument(hashType == Transaction.SigHash.ALL, "Only SIGHASH_ALL is currently supported");
-
-        // The transaction is signed with the input scripts empty
-        // except for the input we are signing. In the case where
-        // addInput has been used to set up a new transaction, they
-        // are already all empty. The input being signed has to have
-        // the connected OUTPUT program in it when the hash is
-        // calculated!
-        //
-        // Note that each input may be claiming an output sent to a
-        // different key. So we have to look at the outputs to figure
-        // out which key to sign with.
-
-        TransactionSignature[] signatures = new TransactionSignature[inputs.size()];
-        ECKey[] signingKeys = new ECKey[inputs.size()];
-        for (int i = 0; i < inputs.size(); i++) {
-            TransactionInput input = inputs.get(i);
-            // We don't have the connected output, we assume it was
-            // signed already and move on
-            if (input.getScriptBytes().length != 0)
-                log.warn("Re-signing an already signed transaction! Be sure this is what you want.");
-
-            // This assert should never fire. If it does, it means the wallet is inconsistent.
-            checkNotNull(key, "Transaction exists in wallet that we cannot redeem: %s",
-                    input.getOutpoint().getHash());
-
-            // Keep the key around for the script creation step below.
-            signingKeys[i] = key;
-
-            // The anyoneCanPay feature isn't used at the moment.
-            boolean anyoneCanPay = false;
-            signatures[i] = tx.calculateSignature(i, key, inputScripts.get(i), hashType, anyoneCanPay);
-        }
-
-        // Now we have calculated each signature, go through and
-        // create the scripts. Reminder: the script consists:
-        //
-        // 1) For pay-to-address outputs: a signature (over a hash of
-        // the simplified transaction) and the complete public key
-        // needed to sign for the connected output. The output script
-        // checks the provided pubkey hashes to the address and then
-        // checks the signature.
-        //
-        // 2) For pay-to-key outputs: just a signature.
-        //
-        for (int i = 0; i < inputs.size(); i++) {
-            if (signatures[i] == null)
-                continue;
-            TransactionInput input = inputs.get(i);
-            Script scriptPubKey = inputScripts.get(i);
-            if (scriptPubKey.isSentToAddress()) {
-
-                input.setScriptSig(ScriptBuilder.createInputScript(signatures[i],
-                        signingKeys[i]));
-            } else if (scriptPubKey.isSentToRawPubKey()) {
-
-                input.setScriptSig(ScriptBuilder.createInputScript(signatures[i]));
-            } else {
-                // Should be unreachable - if we don't recognize
-                // the type of script we're trying to sign for,
-                // then we should have failed above when fetching
-                // the key to sign with.
-                throw new RuntimeException("Do not understand script type: " + scriptPubKey);
-            }
-        }
-
-        // Every input is now complete.
-    }
-
     private class BalanceRequestTask extends AsyncTask<String, Integer, Integer>
     {
         ProgressDialog progress;
@@ -589,6 +483,7 @@ public class SweepKeyFragment extends SherlockFragment {
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setTitle(R.string.sweep_getbalance_title);
             progress.setMessage(activity.getString(R.string.sweep_getbalance_text));
+            progress.setCancelable(false);
             progress.show();
 
             unspentOutputs.clear();
@@ -615,7 +510,6 @@ public class SweepKeyFragment extends SherlockFragment {
                     reader = new InputStreamReader(new BufferedInputStream(connection.getInputStream(), 1024), Constants.UTF_8);
                     final StringBuilder content = new StringBuilder();
                     Io.copy(reader, content);
-
                     try
                     {
                         final JSONObject json = new JSONObject(content.toString());
@@ -640,13 +534,11 @@ public class SweepKeyFragment extends SherlockFragment {
                             );
                             unspentOutputs.add(out);
                         }
-
                     } catch (Exception e)
                     {
                         log.debug("Error while reading the JSON response");
                         return -1;
                     }
-
                 }
                 else
                 {
@@ -665,15 +557,10 @@ public class SweepKeyFragment extends SherlockFragment {
                     {
                         reader.close();
                     }
-                    catch (final IOException x)
-                    {
-                        // swallow
-                    }
+                    catch (final IOException x){/*ignore*/}
                 }
-
                 if (connection != null)
                     connection.disconnect();
-
             }
 
             long stop = System.currentTimeMillis();
@@ -688,7 +575,9 @@ public class SweepKeyFragment extends SherlockFragment {
 
         @Override
         protected void onPostExecute(Integer result) {
-            progress.dismiss();
+            try {
+                progress.dismiss();
+            } catch (Exception ignore){} // Happens during rotation
             switch (result)
             {
                 case -1:
@@ -712,43 +601,25 @@ public class SweepKeyFragment extends SherlockFragment {
 
             updateView();
         }
-
     }
 
-    private class UnspentOutput
+    private class SignAndSendTransactionTask extends AsyncTask<ArrayList<Script>, Void, Void>
     {
-        private String txHash;
-        private Integer txOutputN;
-        private String script;
-        private BigInteger value;
-        private Integer confirmations;
+        @Override
+        protected void onPreExecute () {}
 
-        private UnspentOutput(String txHash, Integer txOutputN, String script, BigInteger value, Integer confirmations) {
-            this.txHash = txHash;
-            this.txOutputN = txOutputN;
-            this.script = script;
-            this.value = value;
-            this.confirmations = confirmations;
+        @Override
+        protected Void doInBackground(ArrayList<Script>... scripts) {
+            SweepHelper.signTransactionInputs(sweepTransaction, Transaction.SigHash.ALL, key, scripts[0]);
+            return null;
         }
 
-        public String getTxHash() {
-            return txHash;
-        }
+        @Override
+        protected void onPostExecute(Void x) {
+            sweepTransaction.getConfidence().addEventListener(sweepTransactionConfidenceListener);
 
-        public Integer getTxOutputN() {
-            return txOutputN;
-        }
-
-        public String getScript() {
-            return script;
-        }
-
-        public BigInteger getValue() {
-            return value;
-        }
-
-        public Integer getConfirmations() {
-            return confirmations;
+            // Now bind to the service so we can broadcast the transaction
+            activity.bindService(new Intent(activity, BlockchainServiceImpl.class), serviceConnection, Context.BIND_AUTO_CREATE);
         }
     }
 }

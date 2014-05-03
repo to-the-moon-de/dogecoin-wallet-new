@@ -232,7 +232,8 @@
     <string name="sweep_activity_title">Sweep key</string>
     <string name="sweep_hint">This function will \'sweep\' the private key you scanned.\nThis means
         that the balance of this key will be transferred to your current default wallet address.\nKeep
-        in mind that you should NOT reuse the scanned key afterwards!</string>
+        in mind that you should NOT reuse the scanned key afterwards!\nNetwork fee will be calculated
+        automatically for you.</string>
     <string name="sweep_amount">Key balance</string>
     <string name="sweep_getbalance_title">Please wait</string>
     <string name="sweep_getbalance_text">Requesting balance from dogechain.info</string>

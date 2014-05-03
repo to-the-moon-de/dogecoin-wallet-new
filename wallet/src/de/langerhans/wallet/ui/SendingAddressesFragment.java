@@ -163,7 +163,7 @@ public final class SendingAddressesFragment extends SherlockListFragment impleme
 
                 @Override
                 protected void handlePrivateKeyScan(final ECKey key) {
-                    activity.processPrivareKeyScan(key);
+                    cannotClassify(input);
                 }
 
 				@Override
@@ -230,7 +230,7 @@ public final class SendingAddressesFragment extends SherlockListFragment impleme
 
                 @Override
                 protected void handlePrivateKeyScan(final ECKey key) {
-                    activity.processPrivareKeyScan(key);
+                    cannotClassify(input);
                 }
 
 				@Override

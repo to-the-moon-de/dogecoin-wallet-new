@@ -23,10 +23,10 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.dogecoin.core.Address;
 import com.google.dogecoin.core.ECKey;
 import com.google.dogecoin.core.Transaction;
 
+import de.langerhans.wallet.Constants;
 import de.langerhans.wallet.PaymentIntent;
 import de.langerhans.wallet.ui.InputParser.StringInputParser;
 
@@ -72,7 +72,7 @@ public final class SendCoinsQrActivity extends AbstractOnDemandServiceActivity
 
                 @Override
                 protected void handlePrivateKeyScan(final ECKey key) {
-                    processPrivareKeyScan(key);
+                    SendCoinsActivity.start(SendCoinsQrActivity.this, PaymentIntent.fromAddress(key.toAddress(Constants.NETWORK_PARAMETERS), ""));
                 }
 
 				@Override

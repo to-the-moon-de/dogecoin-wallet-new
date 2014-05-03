@@ -75,6 +75,7 @@
         android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
         android:layout_marginTop="8dp"
         android:textStyle="bold"
+        android:textColor="@android:color/holo_red_dark"
         android:id="@+id/sweep_error"
         android:text=""/>
 

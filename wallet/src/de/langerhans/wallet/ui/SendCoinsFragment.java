@@ -671,7 +671,7 @@ public final class SendCoinsFragment extends SherlockFragment
 
                     @Override
                     protected void handlePrivateKeyScan(final ECKey key) {
-                        activity.processPrivareKeyScan(key);
+                        updateStateFrom(PaymentIntent.fromAddress(key.toAddress(Constants.NETWORK_PARAMETERS), ""));
                     }
 
 					@Override
@@ -1226,7 +1226,7 @@ public final class SendCoinsFragment extends SherlockFragment
 
             @Override
             protected void handlePrivateKeyScan(final ECKey key) {
-                activity.processPrivareKeyScan(key);
+                cannotClassify(input);
             }
 
 			@Override
