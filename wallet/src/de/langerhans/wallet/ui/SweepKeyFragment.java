@@ -41,7 +41,7 @@ import java.io.Reader;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * @author Maximilian Keller
@@ -74,13 +74,15 @@ public class SweepKeyFragment extends SherlockFragment {
     private BigInteger balance = BigInteger.ZERO;
     private BigInteger unconfBalance = BigInteger.ZERO;
 
+    //chain urls
+    private List<String> blockchainUrls = Arrays.asList(
+            "https://dogechain.info/unspent/%s",
+            "https://chain.so/api/v2/lite/unspent/%s"
+    );
+
     private static final Logger log = LoggerFactory.getLogger(SweepKeyFragment.class);
 
     private static final BigInteger KB_DIVISOR = BigInteger.valueOf(1000);
-
-    //chain urls
-    private static final String URL_UNSPENT_DOGECHAIN = "https://dogechain.info/unspent/%s";
-    private static final String URL_UNSPENT_SOCHAIN = "https://chain.so/api/v2/lite/unspent/%s";
 
     private static final int ID_RATE_LOADER = 0;
     private enum State
@@ -496,12 +498,17 @@ public class SweepKeyFragment extends SherlockFragment {
 
         @Override
         protected Integer doInBackground(String... address) {
-            Integer fetchResult = fetchUnspentOutputs(URL_UNSPENT_DOGECHAIN, address);
+            //randomize url order
+            long seed = System.nanoTime();
+            Collections.shuffle(blockchainUrls, new Random(seed));
 
-            // try again with sochain if dogechain crapped out
+            String url = blockchainUrls.get(0);
+            Integer fetchResult = fetchUnspentOutputs(url, address);
+
             if (fetchResult == -1) {
-                log.debug("Failed fetching unspent outputs from dogechain, trying sochain...");
-                fetchResult = fetchUnspentOutputs(URL_UNSPENT_SOCHAIN, address);
+                // try with alternate provider
+                log.debug("Failed fetching unspent outputs from " + url + ", retrying...");
+                fetchResult = fetchUnspentOutputs(blockchainUrls.get(1), address);
             }
 
             return fetchResult;
