@@ -254,7 +254,7 @@
         berechnet.</string>
     <string name="sweep_amount">Guthaben</string>
     <string name="sweep_getbalance_title">Bitte warten.</string>
-    <string name="sweep_getbalance_text">Guthaben wird von dogechain.info abgefragt</string>
+    <string name="sweep_getbalance_text">Guthaben wird abgefragt</string>
     <string name="sweep_getbalance_failed">Konnte Guthaben nicht abfragen. Stelle sicher, dass
         du eine gute Netzwerkverbidung hast.</string>
     <string name="sweep_unconfirmed">Der Schlüssel hat ein unbestätigtes Guthaben von %s DOGE und kann daher noch nicht

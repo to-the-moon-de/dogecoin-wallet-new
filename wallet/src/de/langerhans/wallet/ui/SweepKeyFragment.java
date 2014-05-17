@@ -80,6 +80,7 @@ public class SweepKeyFragment extends SherlockFragment {
 
     //chain urls
     private static final String URL_UNSPENT_DOGECHAIN = "https://dogechain.info/unspent/%s";
+    private static final String URL_UNSPENT_SOCHAIN = "https://chain.so/api/v2/lite/unspent/%s";
 
     private static final int ID_RATE_LOADER = 0;
     private enum State
@@ -496,6 +497,12 @@ public class SweepKeyFragment extends SherlockFragment {
         @Override
         protected Integer doInBackground(String... address) {
             Integer fetchResult = fetchUnspentOutputs(URL_UNSPENT_DOGECHAIN, address);
+
+            // try again with sochain if dogechain crapped out
+            if (fetchResult == -1) {
+                log.debug("Failed fetching unspent outputs from dogechain, trying sochain...");
+                fetchResult = fetchUnspentOutputs(URL_UNSPENT_SOCHAIN, address);
+            }
 
             return fetchResult;
         }
