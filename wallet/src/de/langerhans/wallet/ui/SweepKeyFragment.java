@@ -28,6 +28,7 @@ import de.langerhans.wallet.sweep.UnspentOutput;
 import de.langerhans.wallet.util.GenericUtils;
 import de.langerhans.wallet.util.Io;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ import java.io.Reader;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * @author Maximilian Keller
@@ -73,6 +74,12 @@ public class SweepKeyFragment extends SherlockFragment {
     private BigInteger balance = BigInteger.ZERO;
     private BigInteger unconfBalance = BigInteger.ZERO;
 
+    //chain urls
+    private List<String> blockchainUrls = Arrays.asList(
+            "https://dogechain.info/unspent/%s",
+            "https://chain.so/api/v2/lite/unspent/%s"
+    );
+
     private static final Logger log = LoggerFactory.getLogger(SweepKeyFragment.class);
 
     private static final BigInteger KB_DIVISOR = BigInteger.valueOf(1000);
@@ -80,7 +87,7 @@ public class SweepKeyFragment extends SherlockFragment {
     private static final int ID_RATE_LOADER = 0;
     private enum State
     {
-        INPUT, PREPARATION, SENDING, SENT, FAILED
+        INPUT, PREPARATION, SENDING, SENT, FAILED, NOTHING_TO_DO
     }
 
     @Override
@@ -362,14 +369,15 @@ public class SweepKeyFragment extends SherlockFragment {
                 String error = activity.getString(R.string.sweep_unconfirmed, GenericUtils.formatValue(unconfBalance, config.getBtcPrecision(), config.getBtcShift()));
                 sweepErorr.setText(error);
             }
-            else if(balance.signum() == 0 && !(unconfBalance.signum() == 1))
-            {
-                sweepErorr.setText(activity.getString(R.string.sweep_zero));
-            }else
+            else
             {
                 sweepErorr.setText(R.string.sweep_getbalance_failed);
             }
 
+            viewCancel.setText(R.string.send_coins_fragment_button_back);
+            viewGo.setText(R.string.send_coins_failed_msg);
+        } else if (state == State.NOTHING_TO_DO) {
+            sweepErorr.setText(activity.getString(R.string.sweep_zero));
             viewCancel.setText(R.string.send_coins_fragment_button_back);
             viewGo.setText(R.string.send_coins_failed_msg);
         }
@@ -475,7 +483,6 @@ public class SweepKeyFragment extends SherlockFragment {
     private class BalanceRequestTask extends AsyncTask<String, Integer, Integer>
     {
         ProgressDialog progress;
-        String dogechainApi = "https://dogechain.info/unspent/%s";
         @Override
         protected void onPreExecute () {
             progress = new ProgressDialog(activity);
@@ -491,14 +498,73 @@ public class SweepKeyFragment extends SherlockFragment {
 
         @Override
         protected Integer doInBackground(String... address) {
-            long start = System.currentTimeMillis();
+            //randomize url order
+            long seed = System.nanoTime();
+            Collections.shuffle(blockchainUrls, new Random(seed));
+
+            String url = blockchainUrls.get(0);
+            Integer fetchResult = fetchUnspentOutputs(url, address);
+
+            if (fetchResult == -1) {
+                // try with alternate provider
+                log.debug("Failed fetching unspent outputs from " + url + ", retrying...");
+                fetchResult = fetchUnspentOutputs(blockchainUrls.get(1), address);
+            }
+
+            return fetchResult;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            try {
+                progress.dismiss();
+            } catch (Exception ignore){} // Happens during rotation
+
+            switch (result)
+            {
+                case 1: // fetch successful and found unspent outs
+                    calculateSpendableBalance();
+                    if (unconfBalance.signum() == 1)
+                        state = State.FAILED;
+                    break;
+                case 0: // fetch successful but no unspent outs
+                    state = State.NOTHING_TO_DO;
+                    break;
+                case -1: // error occurred or we don't know what happened
+                default:
+                    state = State.FAILED;
+                    break;
+            }
+
+            updateView();
+        }
+
+        private void calculateSpendableBalance() {
+            balance = BigInteger.ZERO;
+            unconfBalance = BigInteger.ZERO;
+
+            for (UnspentOutput out : unspentOutputs)
+            {
+                //TODO: this gives a wrong result if there are coinbase outs on the wallet
+                if (out.getConfirmations() >= 3)
+                    balance = balance.add(out.getValue());
+                else
+                    unconfBalance = unconfBalance.add(out.getValue());
+            }
+        }
+
+        private Integer fetchUnspentOutputs (String baseUrl, String... address) {
             HttpURLConnection connection = null;
             Reader reader = null;
+            String urlString;
+
+            // fail by default
+            Integer result = -1;
 
             try
             {
-                dogechainApi = String.format(dogechainApi, address);
-                URL url = new URL(dogechainApi);
+                urlString = String.format(baseUrl, address);
+                URL url = new URL(urlString);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setConnectTimeout(Constants.HTTP_TIMEOUT_MS);
                 connection.setReadTimeout(Constants.HTTP_TIMEOUT_MS);
@@ -510,42 +576,17 @@ public class SweepKeyFragment extends SherlockFragment {
                     reader = new InputStreamReader(new BufferedInputStream(connection.getInputStream(), 1024), Constants.UTF_8);
                     final StringBuilder content = new StringBuilder();
                     Io.copy(reader, content);
-                    try
-                    {
-                        final JSONObject json = new JSONObject(content.toString());
 
-                        Integer success = json.getInt("success");
-                        if (success != 1)
-                            return -1;
-
-                        JSONArray unspentJson = json.getJSONArray("unspent_outputs");
-                        if(unspentJson.length() <= 0)
-                            return 0;
-
-                        for (int i = 0 ; i < unspentJson.length(); i++)
-                        {
-                            JSONObject output = unspentJson.getJSONObject(i);
-                            UnspentOutput out = new UnspentOutput(
-                                    output.getString("tx_hash"),
-                                    output.getInt("tx_output_n"),
-                                    output.getString("script"),
-                                    new BigInteger(output.getString("value")),
-                                    output.getInt("confirmations")
-                            );
-                            unspentOutputs.add(out);
-                        }
-                    } catch (Exception e)
-                    {
-                        log.debug("Error while reading the JSON response");
-                        return -1;
-                    }
+                    // pass JSON content to the parser and accept it's
+                    // result output as ours
+                    result = parseUnspentJSON(content.toString());
                 }
                 else
                 {
                     log.debug("http status " + responseCode + " when fetching unspent outputs");
                 }
             }
-            catch (final Exception x)
+            catch (final IOException x)
             {
                 log.debug("problem reading unspent outputs", x);
             }
@@ -557,49 +598,51 @@ public class SweepKeyFragment extends SherlockFragment {
                     {
                         reader.close();
                     }
-                    catch (final IOException x){/*ignore*/}
+                    catch (final IOException ignore){}
                 }
                 if (connection != null)
                     connection.disconnect();
             }
 
-            long stop = System.currentTimeMillis();
-            if (stop - start < 1500)
-                try {
-                    Thread.sleep(1500 - (stop-start)); //Need to promote dogechain a bit :D
-                } catch (InterruptedException e) {
-                    //ignore
-                }
-            return 1;
+            return result;
         }
 
-        @Override
-        protected void onPostExecute(Integer result) {
-            try {
-                progress.dismiss();
-            } catch (Exception ignore){} // Happens during rotation
-            switch (result)
+        private Integer parseUnspentJSON (String doc) {
+            try
             {
-                case -1:
-                case 0:
-                    state = State.FAILED;
+                final JSONObject json = new JSONObject(doc);
+
+                // json should validate itself, otherwise we do not trust it.
+                Integer success = json.getInt("success");
+                if (success != 1)
+                    return -1;
+
+                JSONArray unspentJson = json.getJSONArray("unspent_outputs");
+
+                // if there are no unspent outputs, balance is 0
+                // and we have nothing to sweep
+                if(unspentJson.length() <= 0)
+                    return 0;
+
+                for (int i = 0 ; i < unspentJson.length(); i++)
+                {
+                    JSONObject output = unspentJson.getJSONObject(i);
+                    UnspentOutput out = new UnspentOutput(
+                            output.getString("tx_hash"),
+                            output.getInt("tx_output_n"),
+                            output.getString("script"),
+                            new BigInteger(output.getString("value")),
+                            output.getInt("confirmations")
+                    );
+                    unspentOutputs.add(out);
+                }
+            } catch (JSONException e)
+            {
+                log.debug("Error while reading the JSON response");
+                return -1;
             }
 
-            balance = BigInteger.ZERO;
-            unconfBalance = BigInteger.ZERO;
-
-            for (UnspentOutput out : unspentOutputs)
-            {
-                if (out.getConfirmations() >= 3)
-                    balance = balance.add(out.getValue());
-                else
-                    unconfBalance = unconfBalance.add(out.getValue());
-            }
-
-            if (unconfBalance.signum() == 1)
-                state = State.FAILED;
-
-            updateView();
+            return 1;
         }
     }
 
