@@ -27,7 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import de.langerhans.wallet.ui.TransactionsListFragment.Direction;
 import de.langerhans.wallet.util.ViewPagerTabs;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

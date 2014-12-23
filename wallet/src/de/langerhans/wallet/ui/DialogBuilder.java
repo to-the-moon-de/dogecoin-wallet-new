@@ -27,7 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

@@ -27,7 +27,7 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import de.langerhans.wallet.Constants;
 import de.langerhans.wallet.WalletApplication;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

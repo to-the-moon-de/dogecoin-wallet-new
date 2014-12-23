@@ -31,7 +31,7 @@ import android.os.Parcelable;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.View;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

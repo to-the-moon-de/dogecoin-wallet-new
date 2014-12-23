@@ -45,7 +45,7 @@ import de.langerhans.wallet.ExchangeRatesProvider.ExchangeRate;
 import de.langerhans.wallet.WalletApplication;
 import de.langerhans.wallet.service.BlockchainState;
 import de.langerhans.wallet.service.BlockchainStateLoader;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

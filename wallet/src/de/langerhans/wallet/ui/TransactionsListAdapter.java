@@ -52,7 +52,7 @@ import de.langerhans.wallet.AddressBookProvider;
 import de.langerhans.wallet.Constants;
 import de.langerhans.wallet.util.CircularProgressView;
 import de.langerhans.wallet.util.WalletUtils;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

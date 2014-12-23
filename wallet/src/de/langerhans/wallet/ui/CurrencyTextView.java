@@ -31,7 +31,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 import de.langerhans.wallet.Constants;
 import de.langerhans.wallet.util.MonetarySpannable;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

@@ -76,7 +76,7 @@ import de.langerhans.wallet.util.BitmapFragment;
 import de.langerhans.wallet.util.Bluetooth;
 import de.langerhans.wallet.util.Nfc;
 import de.langerhans.wallet.util.Qr;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

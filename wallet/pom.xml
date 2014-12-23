@@ -6,8 +6,8 @@
 
 	<artifactId>wallet</artifactId>
 	<packaging>apk</packaging>
-	<version>4.16-test</version>
-	<name>Bitcoin Wallet</name>
+	<version>2.00</version>
+	<name>Dogecoin Wallet</name>
 
 	<parent>
 		<groupId>de.langerhans.wallet</groupId>
@@ -141,7 +141,7 @@
 			<build>
 				<plugins>
 					<plugin>
-		                                <groupId>com.simpligility.maven.plugins</groupId>
+		                <groupId>com.simpligility.maven.plugins</groupId>
 						<artifactId>android-maven-plugin</artifactId>
 						<configuration>
 							<release>true</release>

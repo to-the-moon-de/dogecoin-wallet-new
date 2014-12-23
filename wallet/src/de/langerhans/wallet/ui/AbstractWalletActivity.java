@@ -28,7 +28,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.langerhans.wallet.WalletApplication;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

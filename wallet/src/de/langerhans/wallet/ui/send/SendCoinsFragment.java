@@ -118,7 +118,7 @@ import de.langerhans.wallet.ui.TransactionsListAdapter;
 import de.langerhans.wallet.util.Bluetooth;
 import de.langerhans.wallet.util.Nfc;
 import de.langerhans.wallet.util.WalletUtils;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

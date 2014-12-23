@@ -80,7 +80,7 @@ import de.langerhans.wallet.ui.ScanActivity;
 import de.langerhans.wallet.ui.TransactionsListAdapter;
 import de.langerhans.wallet.util.MonetarySpannable;
 import de.langerhans.wallet.util.WalletUtils;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

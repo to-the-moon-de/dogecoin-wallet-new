@@ -68,7 +68,7 @@ import de.langerhans.wallet.WalletApplication;
 import de.langerhans.wallet.service.BlockchainService;
 import de.langerhans.wallet.service.BlockchainServiceImpl;
 import de.langerhans.wallet.util.WalletUtils;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

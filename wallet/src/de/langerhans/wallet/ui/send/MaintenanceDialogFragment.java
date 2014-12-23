@@ -60,7 +60,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import de.langerhans.wallet.WalletApplication;
 import de.langerhans.wallet.ui.AbstractWalletActivity;
 import de.langerhans.wallet.ui.DialogBuilder;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

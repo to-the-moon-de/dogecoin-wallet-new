@@ -55,7 +55,7 @@ import android.widget.TextView;
 import com.google.protobuf.ByteString;
 
 import de.langerhans.wallet.WalletApplication;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

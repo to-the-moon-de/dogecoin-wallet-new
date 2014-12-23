@@ -98,7 +98,7 @@ import de.langerhans.wallet.util.Iso8601Format;
 import de.langerhans.wallet.util.Nfc;
 import de.langerhans.wallet.util.WalletUtils;
 import de.langerhans.wallet.util.WholeStringBuilder;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

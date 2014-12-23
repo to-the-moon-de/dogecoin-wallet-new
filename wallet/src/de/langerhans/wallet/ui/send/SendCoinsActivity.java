@@ -28,7 +28,7 @@ import android.view.MenuItem;
 import de.langerhans.wallet.data.PaymentIntent;
 import de.langerhans.wallet.ui.AbstractBindServiceActivity;
 import de.langerhans.wallet.ui.HelpDialogFragment;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

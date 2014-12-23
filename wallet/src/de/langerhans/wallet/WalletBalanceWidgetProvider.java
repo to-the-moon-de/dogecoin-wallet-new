@@ -47,7 +47,7 @@ import de.langerhans.wallet.ui.WalletActivity;
 import de.langerhans.wallet.ui.send.SendCoinsActivity;
 import de.langerhans.wallet.util.GenericUtils;
 import de.langerhans.wallet.util.MonetarySpannable;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

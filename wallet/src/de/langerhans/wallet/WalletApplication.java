@@ -65,7 +65,7 @@ import de.langerhans.wallet.service.BlockchainServiceImpl;
 import de.langerhans.wallet.util.CrashReporter;
 import de.langerhans.wallet.util.Io;
 import de.langerhans.wallet.util.LinuxSecureRandom;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

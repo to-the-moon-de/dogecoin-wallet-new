@@ -50,7 +50,7 @@ import de.langerhans.wallet.Constants;
 import de.langerhans.wallet.FileAttachmentProvider;
 import de.langerhans.wallet.util.CrashReporter;
 import de.langerhans.wallet.util.Io;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

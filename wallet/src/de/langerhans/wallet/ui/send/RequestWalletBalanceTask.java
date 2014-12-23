@@ -52,7 +52,7 @@ import com.google.common.io.BaseEncoding;
 
 import de.langerhans.wallet.Constants;
 import de.langerhans.wallet.util.Io;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach

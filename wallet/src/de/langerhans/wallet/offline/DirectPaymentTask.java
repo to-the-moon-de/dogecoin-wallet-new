@@ -42,7 +42,7 @@ import android.os.Handler;
 import android.os.Looper;
 import de.langerhans.wallet.Constants;
 import de.langerhans.wallet.util.Bluetooth;
-import de.langerhans.wallet_test.R;
+import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach
