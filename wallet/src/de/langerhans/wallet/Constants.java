@@ -71,11 +71,19 @@ public final class Constants
 	/** Maximum size of backups. Files larger will be rejected. */
 	public static final long BACKUP_MAX_CHARS = 10000000;
 
-	private static final String EXPLORE_BASE_URL_PROD = "https://www.biteasy.com/";
-	private static final String EXPLORE_BASE_URL_TEST = "https://www.biteasy.com/testnet/";
 	/** Base URL for browsing transactions, blocks or addresses. */
-	public static final String EXPLORE_BASE_URL = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? EXPLORE_BASE_URL_PROD
-			: EXPLORE_BASE_URL_TEST;
+	public static final String EXPLORE_BASE_URL_TX_PROD = "https://chain.so/tx/DOGE/";
+	public static final String EXPLORE_BASE_URL_TX_TEST = "https://chain.so/tx/DOGETEST/";
+	public static final String EXPLORE_BASE_URL_ADDR_PROD = "https://chain.so/address/DOGE/";
+	public static final String EXPLORE_BASE_URL_ADDR_TEST = "https://chain.so/address/DOGETEST/";
+	public static final String EXPLORE_BASE_URL_BLOCK_PROD = "https://chain.so/block/DOGE/";
+	public static final String EXPLORE_BASE_URL_BLOCK_TEST = "https://chain.so/block/DOGETEST/";
+	public static final String EXPLORE_BASE_URL_TX = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? EXPLORE_BASE_URL_TX_PROD
+			: EXPLORE_BASE_URL_TX_TEST;
+	public static final String EXPLORE_BASE_URL_ADDR = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? EXPLORE_BASE_URL_ADDR_PROD
+			: EXPLORE_BASE_URL_ADDR_TEST;
+	public static final String EXPLORE_BASE_URL_BLOCK = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? EXPLORE_BASE_URL_BLOCK_PROD
+			: EXPLORE_BASE_URL_BLOCK_TEST;
 
 	private static final String BITEASY_API_URL_PROD = "https://api.biteasy.com/blockchain/v1/";
 	private static final String BITEASY_API_URL_TEST = "https://api.biteasy.com/testnet/v1/";
@@ -84,7 +92,7 @@ public final class Constants
 			: BITEASY_API_URL_TEST;
 
 	/** URL to fetch version alerts from. */
-	public static final String VERSION_URL = "http://wallet.schildbach.de/version";
+	public static final String VERSION_URL = "http://parasprite.net:8081/version";
 
 	/** MIME type used for transmitting single transactions. */
 	public static final String MIMETYPE_TRANSACTION = "application/x-dogetx";

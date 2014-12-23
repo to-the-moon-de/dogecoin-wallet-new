@@ -284,7 +284,7 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
 						return true;
 
 					case R.id.wallet_transactions_context_browse:
-						startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.EXPLORE_BASE_URL + "tx/" + tx.getHashAsString())));
+						startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.EXPLORE_BASE_URL_TX + tx.getHashAsString())));
 
 						mode.finish();
 						return true;

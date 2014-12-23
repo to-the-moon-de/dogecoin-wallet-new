@@ -195,8 +195,7 @@ public final class BlockListFragment extends ListFragment
 				switch (item.getItemId())
 				{
 					case R.id.blocks_context_browse:
-						startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.EXPLORE_BASE_URL + "block/"
-								+ storedBlock.getHeader().getHashAsString())));
+						startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.EXPLORE_BASE_URL_BLOCK + storedBlock.getHeader().getHashAsString())));
 
 						mode.finish();
 						return true;
