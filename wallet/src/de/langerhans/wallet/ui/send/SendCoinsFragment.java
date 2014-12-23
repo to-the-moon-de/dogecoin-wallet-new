@@ -338,7 +338,7 @@ public final class SendCoinsFragment extends Fragment
 	private final TransactionConfidence.Listener sentTransactionConfidenceListener = new TransactionConfidence.Listener()
 	{
 		@Override
-		public void onConfidenceChanged(final Transaction tx, final TransactionConfidence.Listener.ChangeReason reason)
+		public void onConfidenceChanged(TransactionConfidence confidence, final ChangeReason reason)
 		{
 			activity.runOnUiThread(new Runnable()
 			{

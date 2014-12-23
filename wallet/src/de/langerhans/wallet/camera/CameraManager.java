@@ -141,6 +141,7 @@ public final class CameraManager
 			try
 			{
 				camera.stopPreview();
+				camera.setPreviewCallback(null);
 			}
 			catch (final RuntimeException x)
 			{

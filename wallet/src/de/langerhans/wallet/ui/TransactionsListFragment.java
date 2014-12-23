@@ -104,7 +104,7 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
 	private final Handler handler = new Handler();
 
 	private static final String KEY_DIRECTION = "direction";
-	private static final long THROTTLE_MS = DateUtils.SECOND_IN_MILLIS;
+	private static final long THROTTLE_MS = 1500;
 	private static final Uri KEY_ROTATION_URI = Uri.parse("http://bitcoin.org/en/alert/2013-08-11-android");
 
 	private static final Logger log = LoggerFactory.getLogger(TransactionsListFragment.class);
@@ -228,7 +228,7 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
 					final DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(activity);
 					final DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(activity);
 
-					mode.setTitle(time != null ? (DateUtils.isToday(time.getTime()) ? getString(R.string.time_today) : dateFormat.format(time))
+					mode.setTitle(time != null ? (DateUtils.isToday(time.getTime()) ? activity.getString(R.string.time_today) : dateFormat.format(time))
 							+ ", " + timeFormat.format(time) : null);
 
 					final Coin value = tx.getValue(wallet);
@@ -238,13 +238,13 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
 
 					final String label;
 					if (tx.isCoinBase())
-						label = getString(R.string.wallet_transactions_fragment_coinbase);
+						label = activity.getString(R.string.wallet_transactions_fragment_coinbase);
 					else if (address != null)
 						label = AddressBookProvider.resolveLabel(activity, address.toString());
 					else
 						label = "?";
 
-					final String prefix = getString(sent ? R.string.symbol_to : R.string.symbol_from) + " ";
+					final String prefix = activity.getString(sent ? R.string.symbol_to : R.string.symbol_from) + " ";
 
 					if (tx.getPurpose() != Purpose.KEY_ROTATION)
 						mode.setSubtitle(label != null ? prefix + label : WalletUtils.formatAddress(prefix, address,

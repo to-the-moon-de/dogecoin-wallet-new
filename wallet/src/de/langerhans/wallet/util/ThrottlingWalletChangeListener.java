@@ -44,7 +44,7 @@ public abstract class ThrottlingWalletChangeListener implements WalletEventListe
 	private final Handler handler = new Handler();
 	private final AtomicBoolean relevant = new AtomicBoolean();
 
-	private static final long DEFAULT_THROTTLE_MS = 500;
+	private static final long DEFAULT_THROTTLE_MS = 1000;
 
 	public ThrottlingWalletChangeListener()
 	{
@@ -140,8 +140,7 @@ public abstract class ThrottlingWalletChangeListener implements WalletEventListe
 	}
 
 	@Override
-	public void onScriptsAdded(final Wallet wallet, final List<Script> scripts)
-	{
+	public void onScriptsChanged(Wallet wallet, List<Script> scripts, boolean isAddingScripts) {
 		// swallow
 	}
 }
