@@ -176,15 +176,15 @@
 
 		<provider
 			android:name="de.langerhans.wallet.AddressBookProvider"
-			android:authorities="de.langerhans.wallet_test.address_book"
+			android:authorities="de.langerhans.wallet.address_book"
 			android:exported="false" />
 		<provider
 			android:name="de.langerhans.wallet.ExchangeRatesProvider"
-			android:authorities="de.langerhans.wallet_test.exchange_rates"
+			android:authorities="de.langerhans.wallet.exchange_rates"
 			android:exported="false" />
 		<provider
 			android:name="de.langerhans.wallet.FileAttachmentProvider"
-			android:authorities="de.langerhans.wallet_test.file_attachment"
+			android:authorities="de.langerhans.wallet.file_attachment"
 			android:exported="false"
 			android:grantUriPermissions="true" />
 
