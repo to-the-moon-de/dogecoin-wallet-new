@@ -35,8 +35,8 @@ import java.util.zip.GZIPInputStream;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.utils.Fiat;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.utils.Fiat;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,13 +63,13 @@ public class ExchangeRatesProvider extends ContentProvider
 {
 	public static class ExchangeRate
 	{
-		public ExchangeRate(@Nonnull final org.bitcoinj.utils.ExchangeRate rate, final String source)
+		public ExchangeRate(@Nonnull final com.dogecoin.dogecoinj.utils.ExchangeRate rate, final String source)
 		{
 			this.rate = rate;
 			this.source = source;
 		}
 
-		public final org.bitcoinj.utils.ExchangeRate rate;
+		public final com.dogecoin.dogecoinj.utils.ExchangeRate rate;
 		public final String source;
 
 		public String getCurrencyCode()
@@ -188,7 +188,7 @@ public class ExchangeRatesProvider extends ContentProvider
 			for (final Map.Entry<String, ExchangeRate> entry : exchangeRates.entrySet())
 			{
 				final ExchangeRate exchangeRate = entry.getValue();
-				final org.bitcoinj.utils.ExchangeRate rate = exchangeRate.rate;
+				final com.dogecoin.dogecoinj.utils.ExchangeRate rate = exchangeRate.rate;
 				final String currencyCode = exchangeRate.getCurrencyCode();
 				cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value).add(exchangeRate.source);
 			}
@@ -199,7 +199,7 @@ public class ExchangeRatesProvider extends ContentProvider
 			for (final Map.Entry<String, ExchangeRate> entry : exchangeRates.entrySet())
 			{
 				final ExchangeRate exchangeRate = entry.getValue();
-				final org.bitcoinj.utils.ExchangeRate rate = exchangeRate.rate;
+				final com.dogecoin.dogecoinj.utils.ExchangeRate rate = exchangeRate.rate;
 				final String currencyCode = exchangeRate.getCurrencyCode();
 				final String currencySymbol = GenericUtils.currencySymbol(currencyCode);
 				if (currencyCode.toLowerCase(Locale.US).contains(selectionArg) || currencySymbol.toLowerCase(Locale.US).contains(selectionArg))
@@ -212,7 +212,7 @@ public class ExchangeRatesProvider extends ContentProvider
 			final ExchangeRate exchangeRate = bestExchangeRate(selectionArg);
 			if (exchangeRate != null)
 			{
-				final org.bitcoinj.utils.ExchangeRate rate = exchangeRate.rate;
+				final com.dogecoin.dogecoinj.utils.ExchangeRate rate = exchangeRate.rate;
 				final String currencyCode = exchangeRate.getCurrencyCode();
 				cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value).add(exchangeRate.source);
 			}
@@ -255,7 +255,7 @@ public class ExchangeRatesProvider extends ContentProvider
 		final Fiat rateFiat = Fiat.valueOf(currencyCode, cursor.getLong(cursor.getColumnIndexOrThrow(ExchangeRatesProvider.KEY_RATE_FIAT)));
 		final String source = cursor.getString(cursor.getColumnIndexOrThrow(ExchangeRatesProvider.KEY_SOURCE));
 
-		return new ExchangeRate(new org.bitcoinj.utils.ExchangeRate(rateCoin, rateFiat), source);
+		return new ExchangeRate(new com.dogecoin.dogecoinj.utils.ExchangeRate(rateCoin, rateFiat), source);
 	}
 
 	@Override
@@ -335,7 +335,7 @@ public class ExchangeRatesProvider extends ContentProvider
 
 									if (rate.signum() > 0)
 									{
-										rates.put(currencyCode, new ExchangeRate(new org.bitcoinj.utils.ExchangeRate(rate), source));
+										rates.put(currencyCode, new ExchangeRate(new com.dogecoin.dogecoinj.utils.ExchangeRate(rate), source));
 										break;
 									}
 								}

@@ -27,11 +27,11 @@ import java.util.concurrent.RejectedExecutionException;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Block;
-import org.bitcoinj.core.Sha256Hash;
-import org.bitcoinj.core.StoredBlock;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.Block;
+import com.dogecoin.dogecoinj.core.Sha256Hash;
+import com.dogecoin.dogecoinj.core.StoredBlock;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

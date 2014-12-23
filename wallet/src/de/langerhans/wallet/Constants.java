@@ -19,10 +19,10 @@ package de.langerhans.wallet;
 
 import java.io.File;
 
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.MainNetParams;
-import org.bitcoinj.params.TestNet3Params;
-import org.bitcoinj.utils.MonetaryFormat;
+import com.dogecoin.dogecoinj.core.NetworkParameters;
+import com.dogecoin.dogecoinj.params.MainNetParams;
+import com.dogecoin.dogecoinj.params.TestNet3Params;
+import com.dogecoin.dogecoinj.utils.MonetaryFormat;
 
 import android.os.Build;
 import android.os.Environment;

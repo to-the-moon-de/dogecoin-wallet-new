@@ -21,12 +21,12 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.AddressFormatException;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.VerificationException;
-import org.bitcoinj.uri.BitcoinURI;
-import org.bitcoinj.uri.BitcoinURIParseException;
+import com.dogecoin.dogecoinj.core.Address;
+import com.dogecoin.dogecoinj.core.AddressFormatException;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.VerificationException;
+import com.dogecoin.dogecoinj.uri.BitcoinURI;
+import com.dogecoin.dogecoinj.uri.BitcoinURIParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

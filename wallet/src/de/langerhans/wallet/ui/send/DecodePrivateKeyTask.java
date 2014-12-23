@@ -19,8 +19,8 @@ package de.langerhans.wallet.ui.send;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.crypto.BIP38PrivateKey;
+import com.dogecoin.dogecoinj.core.ECKey;
+import com.dogecoin.dogecoinj.crypto.BIP38PrivateKey;
 
 import android.os.Handler;
 import android.os.Looper;

@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 
 import org.bitcoin.protocols.payments.Protos;
 import org.bitcoin.protocols.payments.Protos.Payment;
-import org.bitcoinj.protocols.payments.PaymentProtocol;
+import com.dogecoin.dogecoinj.protocols.payments.PaymentProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

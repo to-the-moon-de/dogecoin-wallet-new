@@ -17,9 +17,9 @@
 
 package de.langerhans.wallet.offline;
 
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.VerificationException;
-import org.bitcoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.VerificationException;
+import com.dogecoin.dogecoinj.core.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

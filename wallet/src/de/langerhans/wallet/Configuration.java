@@ -19,9 +19,9 @@ package de.langerhans.wallet;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.utils.Fiat;
-import org.bitcoinj.utils.MonetaryFormat;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.utils.Fiat;
+import com.dogecoin.dogecoinj.utils.MonetaryFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -217,7 +217,7 @@ public class Configuration
 			final String cachedExchangeCurrency = prefs.getString(PREFS_KEY_CACHED_EXCHANGE_CURRENCY, null);
 			final Coin cachedExchangeRateCoin = Coin.valueOf(prefs.getLong(PREFS_KEY_CACHED_EXCHANGE_RATE_COIN, 0));
 			final Fiat cachedExchangeRateFiat = Fiat.valueOf(cachedExchangeCurrency, prefs.getLong(PREFS_KEY_CACHED_EXCHANGE_RATE_FIAT, 0));
-			return new ExchangeRate(new org.bitcoinj.utils.ExchangeRate(cachedExchangeRateCoin, cachedExchangeRateFiat), null);
+			return new ExchangeRate(new com.dogecoin.dogecoinj.utils.ExchangeRate(cachedExchangeRateCoin, cachedExchangeRateFiat), null);
 		}
 		else
 		{

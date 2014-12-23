@@ -21,12 +21,12 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.core.WalletEventListener;
-import org.bitcoinj.script.Script;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.ECKey;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.WalletEventListener;
+import com.dogecoin.dogecoinj.script.Script;
 
 import android.os.Handler;
 

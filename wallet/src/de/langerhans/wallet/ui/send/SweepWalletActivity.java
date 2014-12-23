@@ -19,7 +19,7 @@ package de.langerhans.wallet.ui.send;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.VersionedChecksummedBytes;
+import com.dogecoin.dogecoinj.core.VersionedChecksummedBytes;
 
 import android.app.ActionBar;
 import android.content.Context;

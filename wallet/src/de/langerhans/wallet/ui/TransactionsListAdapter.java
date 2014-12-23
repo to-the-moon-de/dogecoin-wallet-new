@@ -26,16 +26,16 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Sha256Hash;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.Transaction.Purpose;
-import org.bitcoinj.core.TransactionConfidence;
-import org.bitcoinj.core.TransactionConfidence.ConfidenceType;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.utils.MonetaryFormat;
-import org.bitcoinj.wallet.DefaultCoinSelector;
+import com.dogecoin.dogecoinj.core.Address;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.Sha256Hash;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.Transaction.Purpose;
+import com.dogecoin.dogecoinj.core.TransactionConfidence;
+import com.dogecoin.dogecoinj.core.TransactionConfidence.ConfidenceType;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.utils.MonetaryFormat;
+import com.dogecoin.dogecoinj.wallet.DefaultCoinSelector;
 
 import android.content.Context;
 import android.content.res.Resources;

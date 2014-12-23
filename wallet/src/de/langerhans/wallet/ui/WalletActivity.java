@@ -41,14 +41,14 @@ import java.util.TimeZone;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.AddressFormatException;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.VerificationException;
-import org.bitcoinj.core.VersionedChecksummedBytes;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.core.Wallet.BalanceType;
-import org.bitcoinj.store.WalletProtobufSerializer;
-import org.bitcoinj.wallet.Protos;
+import com.dogecoin.dogecoinj.core.AddressFormatException;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.VerificationException;
+import com.dogecoin.dogecoinj.core.VersionedChecksummedBytes;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.Wallet.BalanceType;
+import com.dogecoin.dogecoinj.store.WalletProtobufSerializer;
+import com.dogecoin.dogecoinj.wallet.Protos;
 
 import android.app.Activity;
 import android.app.AlertDialog;

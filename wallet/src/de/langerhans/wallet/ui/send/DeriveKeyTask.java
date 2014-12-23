@@ -19,7 +19,7 @@ package de.langerhans.wallet.ui.send;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.crypto.KeyCrypter;
+import com.dogecoin.dogecoinj.crypto.KeyCrypter;
 import org.spongycastle.crypto.params.KeyParameter;
 
 import android.os.Handler;

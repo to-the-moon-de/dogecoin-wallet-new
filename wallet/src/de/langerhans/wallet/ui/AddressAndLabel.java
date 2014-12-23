@@ -20,10 +20,10 @@ package de.langerhans.wallet.ui;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.AddressFormatException;
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.core.WrongNetworkException;
+import com.dogecoin.dogecoinj.core.Address;
+import com.dogecoin.dogecoinj.core.AddressFormatException;
+import com.dogecoin.dogecoinj.core.NetworkParameters;
+import com.dogecoin.dogecoinj.core.WrongNetworkException;
 
 import android.os.Parcel;
 import android.os.Parcelable;

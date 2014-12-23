@@ -27,9 +27,9 @@ import javax.annotation.Nonnull;
 
 import org.bitcoin.protocols.payments.Protos;
 import org.bitcoin.protocols.payments.Protos.PaymentACK;
-import org.bitcoinj.core.ProtocolException;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.protocols.payments.PaymentProtocol;
+import com.dogecoin.dogecoinj.core.ProtocolException;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.protocols.payments.PaymentProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -23,12 +23,12 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.crypto.KeyCrypterException;
-import org.bitcoinj.utils.MonetaryFormat;
-import org.bitcoinj.wallet.DeterministicUpgradeRequiresPassword;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.crypto.KeyCrypterException;
+import com.dogecoin.dogecoinj.utils.MonetaryFormat;
+import com.dogecoin.dogecoinj.wallet.DeterministicUpgradeRequiresPassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.crypto.params.KeyParameter;

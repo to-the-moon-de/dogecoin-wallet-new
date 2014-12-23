@@ -27,16 +27,16 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.VerificationException;
-import org.bitcoinj.core.VersionMessage;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.crypto.MnemonicCode;
-import org.bitcoinj.store.UnreadableWalletException;
-import org.bitcoinj.store.WalletProtobufSerializer;
-import org.bitcoinj.utils.Threading;
-import org.bitcoinj.wallet.Protos;
-import org.bitcoinj.wallet.WalletFiles;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.VerificationException;
+import com.dogecoin.dogecoinj.core.VersionMessage;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.crypto.MnemonicCode;
+import com.dogecoin.dogecoinj.store.UnreadableWalletException;
+import com.dogecoin.dogecoinj.store.WalletProtobufSerializer;
+import com.dogecoin.dogecoinj.utils.Threading;
+import com.dogecoin.dogecoinj.wallet.Protos;
+import com.dogecoin.dogecoinj.wallet.WalletFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

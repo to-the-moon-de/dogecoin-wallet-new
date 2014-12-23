@@ -25,9 +25,9 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.Address;
+import com.dogecoin.dogecoinj.core.ECKey;
+import com.dogecoin.dogecoinj.core.Wallet;
 
 import android.content.Context;
 import android.content.res.Resources;

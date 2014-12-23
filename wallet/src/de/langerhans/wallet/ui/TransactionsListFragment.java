@@ -30,14 +30,14 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.ScriptException;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.Transaction.Purpose;
-import org.bitcoinj.core.TransactionConfidence.ConfidenceType;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.utils.Threading;
+import com.dogecoin.dogecoinj.core.Address;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.ScriptException;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.Transaction.Purpose;
+import com.dogecoin.dogecoinj.core.TransactionConfidence.ConfidenceType;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.utils.Threading;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -17,7 +17,7 @@
 
 package de.langerhans.wallet.ui.preference;
 
-import org.bitcoinj.core.VersionMessage;
+import com.dogecoin.dogecoinj.core.VersionMessage;
 
 import android.app.Activity;
 import android.content.Intent;

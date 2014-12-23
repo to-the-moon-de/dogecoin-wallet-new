@@ -21,9 +21,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.utils.ExchangeRate;
-import org.bitcoinj.utils.Fiat;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.utils.ExchangeRate;
+import com.dogecoin.dogecoinj.utils.Fiat;
 
 import android.view.View;
 import de.langerhans.wallet.ui.CurrencyAmountView.Listener;

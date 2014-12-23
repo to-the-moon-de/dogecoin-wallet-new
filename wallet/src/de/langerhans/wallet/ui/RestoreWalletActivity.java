@@ -26,8 +26,8 @@ import java.io.InputStreamReader;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.core.Wallet.BalanceType;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.Wallet.BalanceType;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -21,11 +21,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.CheckForNull;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.protocols.payments.PaymentProtocol;
-import org.bitcoinj.uri.BitcoinURI;
+import com.dogecoin.dogecoinj.core.Address;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.protocols.payments.PaymentProtocol;
+import com.dogecoin.dogecoinj.uri.BitcoinURI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

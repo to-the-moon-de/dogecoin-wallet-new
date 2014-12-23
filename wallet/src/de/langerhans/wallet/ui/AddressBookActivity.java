@@ -20,8 +20,8 @@ package de.langerhans.wallet.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.ECKey;
+import com.dogecoin.dogecoinj.core.Address;
+import com.dogecoin.dogecoinj.core.ECKey;
 
 import android.app.ActionBar;
 import android.app.Fragment;

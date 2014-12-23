@@ -19,9 +19,9 @@ package de.langerhans.wallet.ui;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.VerificationException;
-import org.bitcoinj.core.VersionedChecksummedBytes;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.VerificationException;
+import com.dogecoin.dogecoinj.core.VersionedChecksummedBytes;
 
 import android.app.Activity;
 import android.content.DialogInterface;

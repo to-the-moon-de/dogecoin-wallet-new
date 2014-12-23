@@ -19,14 +19,14 @@ package de.langerhans.wallet.ui.send;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.InsufficientMoneyException;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.core.Wallet.CompletionException;
-import org.bitcoinj.core.Wallet.CouldNotAdjustDownwards;
-import org.bitcoinj.core.Wallet.SendRequest;
-import org.bitcoinj.crypto.KeyCrypterException;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.InsufficientMoneyException;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.Wallet.CompletionException;
+import com.dogecoin.dogecoinj.core.Wallet.CouldNotAdjustDownwards;
+import com.dogecoin.dogecoinj.core.Wallet.SendRequest;
+import com.dogecoin.dogecoinj.crypto.KeyCrypterException;
 
 import android.os.Handler;
 import android.os.Looper;

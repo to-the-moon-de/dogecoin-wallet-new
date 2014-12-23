@@ -21,10 +21,10 @@ import java.util.concurrent.RejectedExecutionException;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.core.Wallet.BalanceType;
-import org.bitcoinj.utils.Threading;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.Wallet.BalanceType;
+import com.dogecoin.dogecoinj.utils.Threading;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

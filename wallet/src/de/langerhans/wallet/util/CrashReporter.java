@@ -33,9 +33,9 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.TransactionOutput;
-import org.bitcoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.TransactionOutput;
+import com.dogecoin.dogecoinj.core.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

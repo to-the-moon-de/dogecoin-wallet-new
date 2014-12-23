@@ -19,9 +19,9 @@ package de.langerhans.wallet.ui;
 
 import javax.annotation.CheckForNull;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.utils.Fiat;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.utils.Fiat;
 
 import android.app.Activity;
 import android.app.Fragment;

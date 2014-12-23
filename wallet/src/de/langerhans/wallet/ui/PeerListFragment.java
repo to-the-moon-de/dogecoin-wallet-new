@@ -25,8 +25,8 @@ import java.util.concurrent.RejectedExecutionException;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Peer;
-import org.bitcoinj.core.VersionMessage;
+import com.dogecoin.dogecoinj.core.Peer;
+import com.dogecoin.dogecoinj.core.VersionMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -23,10 +23,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.uri.BitcoinURI;
-import org.bitcoinj.utils.Threading;
+import com.dogecoin.dogecoinj.core.Address;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.uri.BitcoinURI;
+import com.dogecoin.dogecoinj.utils.Threading;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

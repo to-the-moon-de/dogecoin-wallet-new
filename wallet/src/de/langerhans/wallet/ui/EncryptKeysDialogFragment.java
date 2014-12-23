@@ -21,11 +21,11 @@ import java.security.SecureRandom;
 
 import javax.annotation.CheckForNull;
 
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.crypto.KeyCrypter;
-import org.bitcoinj.crypto.KeyCrypterException;
-import org.bitcoinj.crypto.KeyCrypterScrypt;
-import org.bitcoinj.wallet.Protos;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.crypto.KeyCrypter;
+import com.dogecoin.dogecoinj.crypto.KeyCrypterException;
+import com.dogecoin.dogecoinj.crypto.KeyCrypterScrypt;
+import com.dogecoin.dogecoinj.wallet.Protos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.crypto.params.KeyParameter;

@@ -21,9 +21,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Monetary;
-import org.bitcoinj.utils.MonetaryFormat;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.Monetary;
+import com.dogecoin.dogecoinj.utils.MonetaryFormat;
 
 import android.content.Context;
 import android.content.res.Resources;

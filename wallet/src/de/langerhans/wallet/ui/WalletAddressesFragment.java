@@ -23,13 +23,13 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.AbstractWalletEventListener;
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.core.WalletEventListener;
-import org.bitcoinj.uri.BitcoinURI;
-import org.bitcoinj.utils.Threading;
+import com.dogecoin.dogecoinj.core.AbstractWalletEventListener;
+import com.dogecoin.dogecoinj.core.Address;
+import com.dogecoin.dogecoinj.core.ECKey;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.WalletEventListener;
+import com.dogecoin.dogecoinj.uri.BitcoinURI;
+import com.dogecoin.dogecoinj.utils.Threading;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

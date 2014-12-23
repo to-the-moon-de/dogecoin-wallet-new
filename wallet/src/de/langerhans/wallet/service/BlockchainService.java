@@ -21,8 +21,8 @@ import java.util.List;
 
 import javax.annotation.CheckForNull;
 
-import org.bitcoinj.core.Peer;
-import org.bitcoinj.core.StoredBlock;
+import com.dogecoin.dogecoinj.core.Peer;
+import com.dogecoin.dogecoinj.core.StoredBlock;
 
 /**
  * @author Andreas Schildbach

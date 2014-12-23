@@ -19,8 +19,8 @@ package de.langerhans.wallet.ui;
 
 import javax.annotation.Nonnull;
 
-import org.bitcoinj.core.Monetary;
-import org.bitcoinj.utils.MonetaryFormat;
+import com.dogecoin.dogecoinj.core.Monetary;
+import com.dogecoin.dogecoinj.utils.MonetaryFormat;
 
 import android.content.Context;
 import android.graphics.Paint;

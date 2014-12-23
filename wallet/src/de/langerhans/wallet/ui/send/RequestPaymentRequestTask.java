@@ -27,7 +27,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.bitcoinj.protocols.payments.PaymentProtocol;
+import com.dogecoin.dogecoinj.protocols.payments.PaymentProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

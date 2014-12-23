@@ -19,11 +19,11 @@ package de.langerhans.wallet;
 
 import java.lang.reflect.Method;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.core.Wallet.BalanceType;
-import org.bitcoinj.utils.Fiat;
-import org.bitcoinj.utils.MonetaryFormat;
+import com.dogecoin.dogecoinj.core.Coin;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.core.Wallet.BalanceType;
+import com.dogecoin.dogecoinj.utils.Fiat;
+import com.dogecoin.dogecoinj.utils.MonetaryFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

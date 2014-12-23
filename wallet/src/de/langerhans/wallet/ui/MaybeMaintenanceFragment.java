@@ -19,9 +19,9 @@ package de.langerhans.wallet.ui;
 
 import java.util.List;
 
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.Wallet;
-import org.bitcoinj.wallet.DeterministicUpgradeRequiresPassword;
+import com.dogecoin.dogecoinj.core.Transaction;
+import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.wallet.DeterministicUpgradeRequiresPassword;
 
 import android.app.Activity;
 import android.app.Fragment;

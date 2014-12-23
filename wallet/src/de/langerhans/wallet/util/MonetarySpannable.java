@@ -24,8 +24,8 @@ import java.util.regex.Matcher;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.bitcoinj.core.Monetary;
-import org.bitcoinj.utils.MonetaryFormat;
+import com.dogecoin.dogecoinj.core.Monetary;
+import com.dogecoin.dogecoinj.utils.MonetaryFormat;
 
 import android.graphics.Typeface;
 import android.text.Spannable;
