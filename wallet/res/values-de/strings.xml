@@ -198,6 +198,8 @@
 	<string name="import_export_keys_dialog_show">Passwort zeigen</string>
 	<string name="import_export_keys_dialog_failure_title">Fehler</string>
 	<string name="import_keys_intent_filter_action">Wallet wiederherstellen</string>
+	<string name="import_export_keys_dialog_password_repeat">Passwort wiederholen</string>
+	<string name="export_keys_dialog_pass_dont_match">Passwörter stimmen nicht überein!</string>
 
 	<string name="encrypt_keys_dialog_title">Ausgabe-PIN</string>
 	<string name="encrypt_keys_dialog_message">Ausgaben von deiner Wallet werden durch die gewählte PIN geschützt.</string>

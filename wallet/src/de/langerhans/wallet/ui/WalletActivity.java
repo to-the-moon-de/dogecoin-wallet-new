@@ -41,6 +41,9 @@ import java.util.TimeZone;
 
 import javax.annotation.Nonnull;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.*;
 import com.dogecoin.dogecoinj.core.AddressFormatException;
 import com.dogecoin.dogecoinj.core.Transaction;
 import com.dogecoin.dogecoinj.core.VerificationException;
@@ -74,10 +77,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.google.common.base.Charsets;
 
@@ -539,6 +538,7 @@ public final class WalletActivity extends AbstractWalletActivity
 	{
 		final View view = getLayoutInflater().inflate(R.layout.backup_wallet_dialog, null);
 		final EditText passwordView = (EditText) view.findViewById(R.id.export_keys_dialog_password);
+		final EditText passwordRepeatView = (EditText) view.findViewById(R.id.export_keys_dialog_password_repeat);
 
 		final DialogBuilder dialog = new DialogBuilder(this);
 		dialog.setTitle(R.string.export_keys_dialog_title);
@@ -550,6 +550,7 @@ public final class WalletActivity extends AbstractWalletActivity
 			{
 				final String password = passwordView.getText().toString().trim();
 				passwordView.setText(null); // get rid of it asap
+				passwordRepeatView.setText(null);
 
 				backupWallet(password);
 
@@ -562,6 +563,7 @@ public final class WalletActivity extends AbstractWalletActivity
 			public void onClick(final DialogInterface dialog, final int which)
 			{
 				passwordView.setText(null); // get rid of it asap
+				passwordRepeatView.setText(null);
 			}
 		});
 		dialog.setOnCancelListener(new OnCancelListener()
@@ -570,6 +572,7 @@ public final class WalletActivity extends AbstractWalletActivity
 			public void onCancel(final DialogInterface dialog)
 			{
 				passwordView.setText(null); // get rid of it asap
+				passwordRepeatView.setText(null);
 			}
 		});
 		return dialog.create();
@@ -578,15 +581,44 @@ public final class WalletActivity extends AbstractWalletActivity
 	private void prepareBackupWalletDialog(final Dialog dialog)
 	{
 		final AlertDialog alertDialog = (AlertDialog) dialog;
+		final Button button = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+		button.setEnabled(false);
 
 		final EditText passwordView = (EditText) alertDialog.findViewById(R.id.export_keys_dialog_password);
 		passwordView.setText(null);
 
-		final ImportDialogButtonEnablerListener dialogButtonEnabler = new ImportDialogButtonEnablerListener(passwordView, alertDialog);
-		passwordView.addTextChangedListener(dialogButtonEnabler);
+		final EditText passwordRepeatView = (EditText) alertDialog.findViewById(R.id.export_keys_dialog_password_repeat);
+		passwordRepeatView.setText(null);
+		passwordRepeatView.addTextChangedListener(new TextWatcher() {
+			@Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+			@Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				final String password = passwordView.getText().toString().trim();
+				final String passwordRepeat = passwordRepeatView.getText().toString().trim();
+				if (!password.equals(passwordRepeat))
+				{
+					button.setEnabled(false);
+					// Only show an error popup if we think it's a typo. Not yet when the user entered just one char of his 20 char pass.
+					if (passwordRepeat.length() - password.length() >= 0)
+						passwordRepeatView.setError(getString(R.string.export_keys_dialog_pass_dont_match));
+				}
+				else if (password.length() == 0) {
+					button.setEnabled(false);
+				}
+				else
+				{
+					button.setEnabled(true);
+				}
+			}
+		});
+
+//		final ImportDialogButtonEnablerListener dialogButtonEnabler = new ImportDialogButtonEnablerListener(passwordView, alertDialog);
+//		passwordView.addTextChangedListener(dialogButtonEnabler);
 
 		final CheckBox showView = (CheckBox) alertDialog.findViewById(R.id.export_keys_dialog_show);
-		showView.setOnCheckedChangeListener(new ShowPasswordCheckListener(passwordView));
+		showView.setOnCheckedChangeListener(new ShowPasswordCheckListener(passwordView, passwordRepeatView));
 
 		final TextView warningView = (TextView) alertDialog.findViewById(R.id.backup_wallet_dialog_warning_encrypted);
 		warningView.setVisibility(wallet.isEncrypted() ? View.VISIBLE : View.GONE);
