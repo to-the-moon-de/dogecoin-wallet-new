@@ -27,7 +27,6 @@ import com.dogecoin.dogecoinj.utils.MonetaryFormat;
 import android.os.Build;
 import android.os.Environment;
 import android.text.format.DateUtils;
-import de.langerhans.wallet.R;
 
 /**
  * @author Andreas Schildbach
@@ -134,7 +133,7 @@ public final class Constants
 	public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(2).optionalDecimals();
 
 	public static final String SOURCE_URL = "https://github.com/langerhans/dogecoin-wallet-new";
-	public static final String BINARY_URL = "http://langerhans.github.io/dogecoin-wallet-new//releases";
+	public static final String BINARY_URL = "http://langerhans.github.io/dogecoin-wallet-new/releases";
 	public static final String MARKET_APP_URL = "market://details?id=%s";
 	public static final String WEBMARKET_APP_URL = "https://play.google.com/store/apps/details?id=%s";
 
