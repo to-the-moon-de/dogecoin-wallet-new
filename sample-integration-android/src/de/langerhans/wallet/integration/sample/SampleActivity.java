@@ -45,8 +45,8 @@ import de.langerhans.wallet.integration.android.BitcoinIntegration;
 public class SampleActivity extends Activity
 {
 	private static final long AMOUNT = 500000;
-	private static final String[] DONATION_ADDRESSES_MAINNET = { "18CK5k1gajRKKSC7yVSTXT9LUzbheh1XY4", "1PZmMahjbfsTy6DsaRyfStzoWTPppWwDnZ" };
-	private static final String[] DONATION_ADDRESSES_TESTNET = { "mkCLjaXncyw8eSWJBcBtnTgviU85z5PfwS", "mwEacn7pYszzxfgcNaVUzYvzL6ypRJzB6A" };
+	private static final String[] DONATION_ADDRESSES_MAINNET = { "DUGJwauFUECTws7kXVk5qX6kgUovUUrcpH", "DJwcKZZcu8CpAKT72osPLx26vzsRJ1Yusy" };
+	private static final String[] DONATION_ADDRESSES_TESTNET = { "nYssW6btebnHm3uKQq5W7Bd2nF32iC7NC9", "ncA1LZ5oe9vnyoxUQ1MNajYi5kRBRVhh3G" };
 	private static final String MEMO = "Sample donation";
 	private static final int REQUEST_CODE = 0;
 

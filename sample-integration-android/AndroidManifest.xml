@@ -16,7 +16,7 @@
 		android:normalScreens="true"
 		android:smallScreens="true" />
 
-	<application android:label="Bitcoin in-app payment sample" >
+	<application android:label="Dogecoin in-app payment sample" >
 		<activity
 			android:name="de.langerhans.wallet.integration.sample.SampleActivity"
 			android:theme="@android:style/Theme.Light" >
