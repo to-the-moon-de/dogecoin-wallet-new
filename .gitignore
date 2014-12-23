@@ -6,3 +6,6 @@ local.properties
 bin/
 gen/
 target/
+out/
+wallet/gen-external-apklibs/
+wallet/release_pom.xml
