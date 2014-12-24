@@ -75,7 +75,7 @@
 			<intent-filter>
 				<action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
-				<data android:mimeType="application/x-btctx" />
+				<data android:mimeType="application/x-dogetx" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
@@ -90,7 +90,7 @@
 			<intent-filter android:label="@string/send_coins_activity_title" >
 				<action android:name="android.intent.action.VIEW" />
 
-				<data android:scheme="bitcoin" />
+				<data android:scheme="dogecoin" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
@@ -98,21 +98,21 @@
 			<intent-filter android:label="@string/send_coins_activity_title" >
 				<action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
-				<data android:scheme="bitcoin" />
+				<data android:scheme="dogecoin" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 			<intent-filter android:label="@string/send_coins_activity_title" >
 				<action android:name="android.intent.action.VIEW" />
 
-				<data android:mimeType="application/bitcoin-paymentrequest" />
+				<data android:mimeType="application/vnd.doge.payment.request" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 			<intent-filter android:label="@string/send_coins_activity_title" >
 				<action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
-				<data android:mimeType="application/bitcoin-paymentrequest" />
+				<data android:mimeType="application/vnd.doge.payment.request" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
@@ -156,7 +156,7 @@
 
 				<category android:name="android.intent.category.DEFAULT" />
 
-				<data android:mimeType="application/x-bitcoin-wallet-backup" />
+				<data android:mimeType="application/x-dogecoin-wallet-backup" />
 				<data android:mimeType="application/octet-stream" />
 			</intent-filter>
 		</activity>
@@ -190,7 +190,7 @@
 
 		<receiver
 			android:name="de.langerhans.wallet.WalletBalanceWidgetProvider"
-			android:label="Bitcoin Wallet Balance" >
+			android:label="Dogecoin Wallet Balance" >
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
