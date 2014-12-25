@@ -17,10 +17,12 @@
 
 package de.langerhans.wallet.ui;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.CheckForNull;
 
+import android.content.pm.ResolveInfo;
 import com.dogecoin.dogecoinj.core.Address;
 import com.dogecoin.dogecoinj.core.Coin;
 import com.dogecoin.dogecoinj.core.Wallet;
@@ -350,6 +352,9 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 	{
 		inflater.inflate(R.menu.request_coins_fragment_options, menu);
 
+		// Remove this entry if there is no other app
+		menu.findItem(R.id.request_coins_options_local_app).setVisible(checkForLocalApp());
+
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -372,6 +377,13 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private boolean checkForLocalApp() {
+		final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("dogecoin:DEwTHxztkSDUJEMywbPk5zVUGrupaNRqEy")); //Just for testing; will never be fired.
+		PackageManager manager = getActivity().getPackageManager();
+		List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
+		return infos.size() > 1; // Excluding ourselves
 	}
 
 	private void handleCopy()
