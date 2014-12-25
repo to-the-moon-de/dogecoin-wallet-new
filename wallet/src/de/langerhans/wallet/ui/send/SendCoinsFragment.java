@@ -521,7 +521,7 @@ public final class SendCoinsFragment extends Fragment
 			final String mimeType = intent.getType();
 
 			if ((Intent.ACTION_VIEW.equals(action) || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) && intentUri != null
-					&& "bitcoin".equals(scheme))
+					&& "dogecoin".equals(scheme))
 			{
 				initStateFromBitcoinUri(intentUri);
 			}
