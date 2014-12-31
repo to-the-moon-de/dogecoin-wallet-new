@@ -41,6 +41,7 @@ import java.util.TimeZone;
 
 import javax.annotation.Nonnull;
 
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.*;
@@ -142,6 +143,13 @@ public final class WalletActivity extends AbstractWalletActivity
 	@Override
 	protected void onResume()
 	{
+		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Configuration.PREFS_KEY_LOCALE_REFRESH, false))
+		{
+			PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(Configuration.PREFS_KEY_LOCALE_REFRESH, false).commit();
+			Intent intent = getIntent();
+			finish();
+			startActivity(intent);
+		}
 		super.onResume();
 
 		handler.postDelayed(new Runnable()

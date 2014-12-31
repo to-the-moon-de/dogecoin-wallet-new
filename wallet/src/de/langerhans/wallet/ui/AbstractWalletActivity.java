@@ -43,7 +43,7 @@ public abstract class AbstractWalletActivity extends Activity
 	protected void onCreate(final Bundle savedInstanceState)
 	{
 		application = (WalletApplication) getApplication();
-
+		application.updateLocale();
 		super.onCreate(savedInstanceState);
 	}
 

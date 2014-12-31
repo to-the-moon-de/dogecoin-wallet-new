@@ -20,8 +20,11 @@ package de.langerhans.wallet.ui.preference;
 import java.util.List;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import de.langerhans.wallet.Configuration;
 import de.langerhans.wallet.R;
 
 /**
@@ -36,6 +39,14 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
 
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Configuration.PREFS_KEY_LOCALE_REFRESH, false)) {
+			finish();
+		}
 	}
 
 	@Override

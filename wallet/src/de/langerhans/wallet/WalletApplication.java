@@ -23,10 +23,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 
+import android.content.res.Resources;
 import com.dogecoin.dogecoinj.core.Transaction;
 import com.dogecoin.dogecoinj.core.VerificationException;
 import com.dogecoin.dogecoinj.core.VersionMessage;
@@ -576,5 +578,26 @@ public class WalletApplication extends Application
 		// workaround for no inexact set() before KitKat
 		final long now = System.currentTimeMillis();
 		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, now + alarmInterval, AlarmManager.INTERVAL_DAY, alarmIntent);
+	}
+
+	public void updateLocale()
+	{
+		final String locale = config.getLocale();
+		Locale loc;
+		android.content.res.Configuration configuration = new android.content.res.Configuration();
+		if (!locale.equals("0"))
+		{
+			if (locale.length() > 2)
+				loc = new Locale(locale.substring(0,1), locale.substring(3,4));
+			else
+				loc = new Locale(locale);
+		}
+		else
+		{
+			loc = Resources.getSystem().getConfiguration().locale;
+		}
+		Locale.setDefault(loc);
+		configuration.locale = loc;
+		getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
 	}
 }

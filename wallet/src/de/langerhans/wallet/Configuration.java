@@ -60,6 +60,8 @@ public class Configuration
 	private static final String PREFS_KEY_LAST_BACKUP = "last_backup";
 	public static final String PREFS_KEY_EXCHANGE_PROVIDER = "exchange_provider";
 	public static final String PREFS_KEY_EXCHANGE_FORCE_REFRESH = "exchange_force";
+	public static final String PREFS_KEY_LOCALE_OVERRIDE = "locale_override";
+	public static final String PREFS_KEY_LOCALE_REFRESH = "locale_refresh";
 
 	private static final int PREFS_DEFAULT_BTC_SHIFT = 0;
 	private static final int PREFS_DEFAULT_BTC_PRECISION = 4;
@@ -170,6 +172,12 @@ public class Configuration
 	public void setExchangeCurrencyCode(final String exchangeCurrencyCode)
 	{
 		prefs.edit().putString(PREFS_KEY_EXCHANGE_CURRENCY, exchangeCurrencyCode).commit();
+	}
+
+	public String getLocale()
+	{
+		final String locale = prefs.getString(PREFS_KEY_LOCALE_OVERRIDE, null);
+		return locale == null ? "0" : locale;
 	}
 
 	public boolean getQrPaymentRequestEnabled()

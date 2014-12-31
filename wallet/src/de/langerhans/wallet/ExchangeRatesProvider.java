@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -208,8 +206,6 @@ public class ExchangeRatesProvider extends ContentProvider
 				}
 				double mBTCRate = dogeBtcConversion*1000;
 				String strmBTCRate = String.format(Locale.US, "%.4f", mBTCRate).replace(',', '.');
-				//newExchangeRates.put("mBTC", new ExchangeRate("mBTC", new BigDecimal(GenericUtils.toNanoCoins(strmBTCRate, 0)).toBigInteger(), providerUrl));
-				//newExchangeRates.put("DOGE", new ExchangeRate("DOGE", BigInteger.valueOf(100000000), "priceofdoge.com"));
 				newExchangeRates.put("mBTC", new ExchangeRate(new com.dogecoin.dogecoinj.utils.ExchangeRate(Fiat.parseFiat("mBTC", strmBTCRate)), providerUrl));
 				newExchangeRates.put("DOGE", new ExchangeRate(new com.dogecoin.dogecoinj.utils.ExchangeRate(Fiat.parseFiat("DOGE", "1")), "priceofdoge.com"));
 				exchangeRates = newExchangeRates;

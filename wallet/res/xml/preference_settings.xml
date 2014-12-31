@@ -41,6 +41,13 @@
 		android:entries="@array/preferences_exchange_labels"
 		android:entryValues="@array/preferences_exchange_values"
 		android:defaultValue="0"/>
+	<ListPreference
+		android:key="locale_override"
+		android:title="Language"
+		android:summary="Select your desired language. Will restart app to apply!"
+		android:entries="@array/preferences_locale_labels"
+		android:entryValues="@array/preferences_locale_values"
+		android:defaultValue="0"/>
 
 	<PreferenceCategory android:title="@string/preferences_category_labs" >
 		<Preference
