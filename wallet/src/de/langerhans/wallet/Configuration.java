@@ -58,6 +58,8 @@ public class Configuration
 	private static final String PREFS_KEY_CHANGE_LOG_VERSION = "change_log_version";
 	public static final String PREFS_KEY_REMIND_BACKUP = "remind_backup";
 	private static final String PREFS_KEY_LAST_BACKUP = "last_backup";
+	public static final String PREFS_KEY_EXCHANGE_PROVIDER = "exchange_provider";
+	public static final String PREFS_KEY_EXCHANGE_FORCE_REFRESH = "exchange_force";
 
 	private static final int PREFS_DEFAULT_BTC_SHIFT = 0;
 	private static final int PREFS_DEFAULT_BTC_PRECISION = 4;
@@ -151,6 +153,18 @@ public class Configuration
 	public String getExchangeCurrencyCode()
 	{
 		return prefs.getString(PREFS_KEY_EXCHANGE_CURRENCY, null);
+	}
+
+	public int getExchangeProvider() {
+		return Integer.parseInt(prefs.getString(PREFS_KEY_EXCHANGE_PROVIDER, "0"));
+	}
+
+	public boolean getExchangeForceRefresh() {
+		return prefs.getBoolean(PREFS_KEY_EXCHANGE_FORCE_REFRESH, false);
+	}
+
+	public boolean setExchangeForceRefresh(boolean value) {
+		return prefs.edit().putBoolean(PREFS_KEY_EXCHANGE_FORCE_REFRESH, value).commit();
 	}
 
 	public void setExchangeCurrencyCode(final String exchangeCurrencyCode)

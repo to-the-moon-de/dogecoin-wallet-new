@@ -130,7 +130,7 @@ public final class Constants
 	public static final int ADDRESS_FORMAT_GROUP_SIZE = 4;
 	public static final int ADDRESS_FORMAT_LINE_SIZE = 12;
 
-	public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(2).optionalDecimals();
+	public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(4).optionalDecimals();
 
 	public static final String SOURCE_URL = "https://github.com/langerhans/dogecoin-wallet-new";
 	public static final String BINARY_URL = "http://langerhans.github.io/dogecoin-wallet-new/releases";

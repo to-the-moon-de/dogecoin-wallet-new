@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import de.langerhans.wallet.Configuration;
 import de.langerhans.wallet.WalletApplication;
 import de.langerhans.wallet.WalletBalanceWidgetProvider;
@@ -111,6 +112,17 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
 		});
 
 		return true;
+	}
+
+	@Override
+	public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen, final Preference preference)
+	{
+		final String key = preference.getKey();
+		if (Configuration.PREFS_KEY_EXCHANGE_PROVIDER.equals(key))
+		{
+			getPreferenceManager().getSharedPreferences().edit().putBoolean(Configuration.PREFS_KEY_EXCHANGE_FORCE_REFRESH, true).commit();
+		}
+		return false;
 	}
 
 	private void updateTrustedPeer(@Nonnull final String trustedPeer)

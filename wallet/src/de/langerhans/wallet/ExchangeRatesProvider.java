@@ -22,9 +22,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Currency;
 import java.util.Iterator;
 import java.util.Locale;
@@ -98,6 +103,7 @@ public class ExchangeRatesProvider extends ContentProvider
 	@CheckForNull
 	private Map<String, ExchangeRate> exchangeRates = null;
 	private long lastUpdated = 0;
+	private double dogeBtcConversion = -1;
 
 	private static final URL BITCOINAVERAGE_URL;
 	private static final String[] BITCOINAVERAGE_FIELDS = new String[] { "24h_avg", "last" };
@@ -105,6 +111,8 @@ public class ExchangeRatesProvider extends ContentProvider
 	private static final URL BLOCKCHAININFO_URL;
 	private static final String[] BLOCKCHAININFO_FIELDS = new String[] { "15m" };
 	private static final String BLOCKCHAININFO_SOURCE = "blockchain.info";
+	private static final URL CRYPTSY_URL;
+	private static final URL BTER_URL;
 
 	// https://bitmarket.eu/api/ticker
 
@@ -114,6 +122,8 @@ public class ExchangeRatesProvider extends ContentProvider
 		{
 			BITCOINAVERAGE_URL = new URL("https://api.bitcoinaverage.com/custom/abw");
 			BLOCKCHAININFO_URL = new URL("https://blockchain.info/ticker");
+			CRYPTSY_URL = new URL("https://api.cryptsy.com/api/v2/markets/132/");
+			BTER_URL = new URL("http://data.bter.com/api/1/ticker/DOGE_BTC");
 		}
 		catch (final MalformedURLException x)
 		{
@@ -156,19 +166,52 @@ public class ExchangeRatesProvider extends ContentProvider
 	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs, final String sortOrder)
 	{
 		final long now = System.currentTimeMillis();
+		int provider = config.getExchangeProvider();
+		boolean forceRefresh = config.getExchangeForceRefresh();
+		if (forceRefresh) {
+			config.setExchangeForceRefresh(false);
+		}
 
 		final boolean offline = uri.getQueryParameter(QUERY_PARAM_OFFLINE) != null;
 
-		if (!offline && (lastUpdated == 0 || now - lastUpdated > UPDATE_FREQ_MS))
+		if (!offline && (lastUpdated == 0 || now - lastUpdated > UPDATE_FREQ_MS) || forceRefresh)
 		{
+			double newDogeBtcConversion = -1;
+			if ((dogeBtcConversion == -1 && newDogeBtcConversion == -1) || forceRefresh)
+				newDogeBtcConversion = requestDogeBtcConversion(provider);
+
+			if (newDogeBtcConversion != -1)
+				dogeBtcConversion = newDogeBtcConversion;
+
+			if (dogeBtcConversion == -1)
+				return null;
+
 			Map<String, ExchangeRate> newExchangeRates = null;
 			if (newExchangeRates == null)
-				newExchangeRates = requestExchangeRates(BITCOINAVERAGE_URL, userAgent, BITCOINAVERAGE_SOURCE, BITCOINAVERAGE_FIELDS);
+				newExchangeRates = requestExchangeRates(BITCOINAVERAGE_URL, dogeBtcConversion, userAgent, BITCOINAVERAGE_SOURCE, BITCOINAVERAGE_FIELDS);
 			if (newExchangeRates == null)
-				newExchangeRates = requestExchangeRates(BLOCKCHAININFO_URL, userAgent, BLOCKCHAININFO_SOURCE, BLOCKCHAININFO_FIELDS);
+				newExchangeRates = requestExchangeRates(BLOCKCHAININFO_URL, dogeBtcConversion, userAgent, BLOCKCHAININFO_SOURCE, BLOCKCHAININFO_FIELDS);
 
 			if (newExchangeRates != null)
 			{
+				String providerUrl;
+				switch (provider) {
+					case 0:
+						providerUrl = "http://www.cryptsy.com";
+						break;
+					case 1:
+						providerUrl = "http://www.bter.com";
+						break;
+					default:
+						providerUrl = "";
+						break;
+				}
+				double mBTCRate = dogeBtcConversion*1000;
+				String strmBTCRate = String.format(Locale.US, "%.4f", mBTCRate).replace(',', '.');
+				//newExchangeRates.put("mBTC", new ExchangeRate("mBTC", new BigDecimal(GenericUtils.toNanoCoins(strmBTCRate, 0)).toBigInteger(), providerUrl));
+				//newExchangeRates.put("DOGE", new ExchangeRate("DOGE", BigInteger.valueOf(100000000), "priceofdoge.com"));
+				newExchangeRates.put("mBTC", new ExchangeRate(new com.dogecoin.dogecoinj.utils.ExchangeRate(Fiat.parseFiat("mBTC", strmBTCRate)), providerUrl));
+				newExchangeRates.put("DOGE", new ExchangeRate(new com.dogecoin.dogecoinj.utils.ExchangeRate(Fiat.parseFiat("DOGE", "1")), "priceofdoge.com"));
 				exchangeRates = newExchangeRates;
 				lastUpdated = now;
 
@@ -178,7 +221,7 @@ public class ExchangeRatesProvider extends ContentProvider
 			}
 		}
 
-		if (exchangeRates == null)
+		if (exchangeRates == null || dogeBtcConversion == -1)
 			return null;
 
 		final MatrixCursor cursor = new MatrixCursor(new String[] { BaseColumns._ID, KEY_CURRENCY_CODE, KEY_RATE_COIN, KEY_RATE_FIAT, KEY_SOURCE });
@@ -282,7 +325,7 @@ public class ExchangeRatesProvider extends ContentProvider
 		throw new UnsupportedOperationException();
 	}
 
-	private static Map<String, ExchangeRate> requestExchangeRates(final URL url, final String userAgent, final String source, final String... fields)
+	private static Map<String, ExchangeRate> requestExchangeRates(final URL url, double dogeBtcConversion, final String userAgent, final String source, final String... fields)
 	{
 		final long start = System.currentTimeMillis();
 
@@ -325,17 +368,24 @@ public class ExchangeRatesProvider extends ContentProvider
 
 						for (final String field : fields)
 						{
-							final String rateStr = o.optString(field, null);
+							final String rate = o.optString(field, null);
 
-							if (rateStr != null)
+							if (rate != null)
 							{
 								try
 								{
-									final Fiat rate = Fiat.parseFiat(currencyCode, rateStr);
+									final double btcRate = Double.parseDouble(Fiat.parseFiat(currencyCode, rate).toPlainString());
+									DecimalFormat df = new DecimalFormat("#.########");
+									df.setRoundingMode(RoundingMode.HALF_UP);
+									DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+									dfs.setDecimalSeparator('.');
+									dfs.setGroupingSeparator(',');
+									df.setDecimalFormatSymbols(dfs);
+									final Fiat dogeRate = Fiat.parseFiat(currencyCode, df.format(btcRate*dogeBtcConversion));
 
-									if (rate.signum() > 0)
+									if (dogeRate.signum() > 0)
 									{
-										rates.put(currencyCode, new ExchangeRate(new com.dogecoin.dogecoinj.utils.ExchangeRate(rate), source));
+										rates.put(currencyCode, new ExchangeRate(new com.dogecoin.dogecoinj.utils.ExchangeRate(dogeRate), source));
 										break;
 									}
 								}
@@ -381,5 +431,99 @@ public class ExchangeRatesProvider extends ContentProvider
 		}
 
 		return null;
+	}
+
+	private static double requestDogeBtcConversion(int provider) {
+		HttpURLConnection connection = null;
+		Reader reader = null;
+		URL providerUrl;
+		switch (provider) {
+			case 0:
+				providerUrl = CRYPTSY_URL;
+				break;
+			case 1:
+				providerUrl = BTER_URL;
+				break;
+			default:
+				providerUrl = CRYPTSY_URL;
+				break;
+		}
+
+		try
+		{
+			connection = (HttpURLConnection) providerUrl.openConnection();
+			connection.setConnectTimeout(Constants.HTTP_TIMEOUT_MS);
+			connection.setReadTimeout(Constants.HTTP_TIMEOUT_MS);
+			connection.connect();
+
+			final int responseCode = connection.getResponseCode();
+			if (responseCode == HttpURLConnection.HTTP_OK)
+			{
+				reader = new InputStreamReader(new BufferedInputStream(connection.getInputStream(), 1024));
+				final StringBuilder content = new StringBuilder();
+				Io.copy(reader, content);
+
+				try
+				{
+					final JSONObject json = new JSONObject(content.toString());
+					double rate;
+					boolean success;
+					switch (provider) {
+						case 0:
+							success = json.getBoolean("success");
+							if (!success) {
+								return -1;
+							}
+                            rate = json.getJSONObject("data")
+                                    .getJSONObject("last_trade")
+									.getDouble("price");
+							break;
+						case 1:
+							success = json.getString("result").equals("true"); // Eww bad API!
+							if (!success) {
+								return -1;
+							}
+							rate = Double.valueOf(
+									json.getString("last"));
+							break;
+						default:
+							return -1;
+					}
+					return rate;
+				} catch (NumberFormatException e)
+				{
+					log.debug("Couldn't get the current exchnage rate from provider " + String.valueOf(provider));
+					return -1;
+				}
+
+			}
+			else
+			{
+				log.debug("http status " + responseCode + " when fetching " + providerUrl);
+			}
+		}
+		catch (final Exception x)
+		{
+			log.debug("problem reading exchange rates", x);
+		}
+		finally
+		{
+			if (reader != null)
+			{
+				try
+				{
+					reader.close();
+				}
+				catch (final IOException x)
+				{
+					// swallow
+				}
+			}
+
+			if (connection != null)
+				connection.disconnect();
+		}
+
+		return -1;
 	}
 }

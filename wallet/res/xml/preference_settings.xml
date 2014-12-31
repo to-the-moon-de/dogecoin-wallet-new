@@ -34,6 +34,13 @@
 			android:targetClass="com.android.settings.Settings$DataUsageSummaryActivity"
 			android:targetPackage="com.android.settings" />
 	</Preference>
+	<ListPreference
+		android:key="exchange_provider"
+		android:title="@string/preferences_exchange_title"
+		android:summary="@string/preferences_exchange_summary"
+		android:entries="@array/preferences_exchange_labels"
+		android:entryValues="@array/preferences_exchange_values"
+		android:defaultValue="0"/>
 
 	<PreferenceCategory android:title="@string/preferences_category_labs" >
 		<Preference
