@@ -89,6 +89,8 @@ public final class Constants
 	/** Base URL for blockchain API. */
 	public static final String BITEASY_API_URL = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? BITEASY_API_URL_PROD
 			: BITEASY_API_URL_TEST;
+	public static final String DOGECHAIN_API_URL = "https://dogechain.info/api/v1/unspent/";
+	public static final String CHAINSO_API_URL = "https://chain.so/api/v2/lite/unspent/";
 
 	/** URL to fetch version alerts from. */
 	public static final String VERSION_URL = "http://parasprite.net:8081/version";

@@ -23,9 +23,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -85,18 +83,21 @@ public final class RequestWalletBalanceTask
 		this.userAgent = userAgent;
 	}
 
-	public void requestWalletBalance(final Address... addresses)
+	public void requestWalletBalance(final Address address)
 	{
 		backgroundHandler.post(new Runnable()
 		{
 			@Override
 			public void run()
 			{
-				final StringBuilder url = new StringBuilder(Constants.BITEASY_API_URL);
-				url.append("unspent-outputs");
-				url.append("?per_page=MAX");
-				for (final Address address : addresses)
-					url.append("&address[]=").append(address.toString());
+				// Use either dogechain or chain.so
+				List<String> urls = new ArrayList<String>(2);
+				urls.add(Constants.DOGECHAIN_API_URL);
+				urls.add(Constants.CHAINSO_API_URL);
+				Collections.shuffle(urls, new Random(System.nanoTime()));
+
+				final StringBuilder url = new StringBuilder(urls.get(0));
+				url.append(address.toString());
 
 				log.debug("trying to request wallet balance from {}", url);
 
@@ -128,18 +129,11 @@ public final class RequestWalletBalanceTask
 
 						final JSONObject json = new JSONObject(content.toString());
 
-						final int status = json.getInt("status");
-						if (status != 200)
-							throw new IOException("api status " + status + " when fetching unspent outputs");
+						final int success = json.getInt("success");
+						if (success != 1)
+							throw new IOException("api status " + success + " when fetching unspent outputs");
 
-						final JSONObject jsonData = json.getJSONObject("data");
-
-						final JSONObject jsonPagination = jsonData.getJSONObject("pagination");
-
-						if (!"false".equals(jsonPagination.getString("next_page")))
-							throw new IllegalStateException("result set too big");
-
-						final JSONArray jsonOutputs = jsonData.getJSONArray("outputs");
+						final JSONArray jsonOutputs = json.getJSONArray("unspent_outputs");
 
 						final Map<Sha256Hash, Transaction> transactions = new HashMap<Sha256Hash, Transaction>(jsonOutputs.length());
 
@@ -147,12 +141,9 @@ public final class RequestWalletBalanceTask
 						{
 							final JSONObject jsonOutput = jsonOutputs.getJSONObject(i);
 
-							if (jsonOutput.getInt("is_spent") != 0)
-								throw new IllegalStateException("UXTO not spent");
-
-							final Sha256Hash uxtoHash = new Sha256Hash(jsonOutput.getString("transaction_hash"));
-							final int uxtoIndex = jsonOutput.getInt("transaction_index");
-							final byte[] uxtoScriptBytes = HEX.decode(jsonOutput.getString("script_pub_key"));
+							final Sha256Hash uxtoHash = new Sha256Hash(jsonOutput.getString("tx_hash"));
+							final int uxtoIndex = jsonOutput.getInt("tx_output_n");
+							final byte[] uxtoScriptBytes = HEX.decode(jsonOutput.getString("script"));
 							final Coin uxtoValue = Coin.valueOf(Long.parseLong(jsonOutput.getString("value")));
 
 							Transaction tx = transactions.get(uxtoHash);
