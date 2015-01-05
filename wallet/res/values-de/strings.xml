@@ -249,6 +249,13 @@
 	<string name="preferences_initiate_reset_dialog_positive">Zurücksetzen</string>
 	<string name="preferences_exchange_title">Wechselkurs</string>
 	<string name="preferences_exchange_summary">Wähle die Quelle für Wechselkurse.</string>
+	<string name="preferences_autosync">AutoSync</string>
+	<string name="preferences_autosync_switch_title">AutoSync aktivieren</string>
+	<string name="preferences_autosync_switch_summary">Anhaken für automatische Synchronisation der Blockchain.</string>
+	<string name="preferences_autosync_charging_summary">Anhaken, um nur während des Ladens automatisch zu synchronisieren.</string>
+	<string name="preferences_autosync_charging_title">Während des Ladens</string>
+	<string name="preferences_autosync_wifi_summary">Anhaken, um nur über WLAN automatisch zu synchronisieren.</string>
+	<string name="preferences_autosync_wifi_title">Nur mit WLAN</string>
 
 	<string name="report_issue_dialog_title_issue">Problem melden</string>
 	<string name="report_issue_dialog_title_crash">Absturz erkannt</string>

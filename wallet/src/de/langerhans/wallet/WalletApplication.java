@@ -39,6 +39,7 @@ import com.dogecoin.dogecoinj.store.WalletProtobufSerializer;
 import com.dogecoin.dogecoinj.utils.Threading;
 import com.dogecoin.dogecoinj.wallet.Protos;
 import com.dogecoin.dogecoinj.wallet.WalletFiles;
+import de.langerhans.wallet.service.AutosyncReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -572,7 +573,9 @@ public class WalletApplication extends Application
 				alarmInterval / DateUtils.MINUTE_IN_MILLIS);
 
 		final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		final PendingIntent alarmIntent = PendingIntent.getService(context, 0, new Intent(context, BlockchainServiceImpl.class), 0);
+		final Intent startIntent = new Intent(context, AutosyncReceiver.class);
+		startIntent.setAction("de.langerhans.wallet.AUTOSYNC_ACTION");
+		final PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, startIntent, 0);
 		alarmManager.cancel(alarmIntent);
 
 		// workaround for no inexact set() before KitKat

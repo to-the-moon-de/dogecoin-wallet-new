@@ -20,6 +20,7 @@
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 	<uses-feature
 		android:name="android.hardware.touchscreen"
@@ -213,6 +214,15 @@
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
 			</intent-filter>
 		</receiver>
 
