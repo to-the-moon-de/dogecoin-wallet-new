@@ -30,6 +30,8 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import android.graphics.Color;
+import android.text.style.ForegroundColorSpan;
 import com.dogecoin.dogecoinj.core.Address;
 import com.dogecoin.dogecoinj.core.Coin;
 import com.dogecoin.dogecoinj.core.ScriptException;
@@ -336,8 +338,14 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
 				getString(direction == Direction.SENT ? R.string.wallet_transactions_fragment_empty_text_sent
 						: R.string.wallet_transactions_fragment_empty_text_received));
 		emptyText.setSpan(new StyleSpan(Typeface.BOLD), 0, emptyText.length(), SpannableStringBuilder.SPAN_POINT_MARK);
-		if (direction != Direction.SENT)
+		if (direction != Direction.SENT) {
 			emptyText.append("\n\n").append(getString(R.string.wallet_transactions_fragment_empty_text_howto));
+
+			String warning = getString(R.string.wallet_transactions_fragment_empty_text_warning);
+			int prevLength = emptyText.length();
+			emptyText.append("\n\n").append(warning);
+			emptyText.setSpan(new ForegroundColorSpan(Color.RED), prevLength, emptyText.length(), SpannableStringBuilder.SPAN_POINT_MARK);
+		}
 
 		setEmptyText(emptyText);
 	}

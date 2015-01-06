@@ -30,6 +30,7 @@
 	<string name="wallet_transactions_fragment_empty_text_received">No Dogecoins received so far.</string>
 	<string name="wallet_transactions_fragment_empty_text_sent">No Dogecoins sent so far.</string>
 	<string name="wallet_transactions_fragment_empty_text_howto">How to get Dogecoins?\n\nTrade for traditional money,\nsell goods or services or\nearn by working.</string>
+	<string name="wallet_transactions_fragment_empty_text_warning">Do not use this wallet to receive lots of transactions with many outputs, like mining pool or faucet payouts! They tend to slow down the wallet to a halt.</string>
 	<string name="wallet_transactions_row_warning_backup">Congratulations, you received your first payment! Have you already &lt;u&gt;backed up your wallet&lt;/u&gt;, to protect against loss?</string>
 	<string name="wallet_transactions_fragment_coinbase">mined</string>
 	<string name="wallet_transactions_fragment_internal">internal</string>
