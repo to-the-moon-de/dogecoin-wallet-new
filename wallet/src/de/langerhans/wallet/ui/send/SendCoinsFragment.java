@@ -831,9 +831,9 @@ public final class SendCoinsFragment extends Fragment
 		final MenuItem emptyAction = menu.findItem(R.id.send_coins_options_empty);
 		emptyAction.setEnabled(state == State.INPUT);
 
-		final MenuItem priorityAction = menu.findItem(R.id.send_coins_options_priority);
+/*		final MenuItem priorityAction = menu.findItem(R.id.send_coins_options_priority);
 		priorityAction.setChecked(priority);
-		priorityAction.setEnabled(state == State.INPUT);
+		priorityAction.setEnabled(state == State.INPUT);*/
 
 		super.onPrepareOptionsMenu(menu);
 	}
@@ -847,9 +847,9 @@ public final class SendCoinsFragment extends Fragment
 				handleScan();
 				return true;
 
-			case R.id.send_coins_options_priority:
+/*			case R.id.send_coins_options_priority:
 				handlePriority();
-				return true;
+				return true;*/
 
 			case R.id.send_coins_options_empty:
 				handleEmpty();
