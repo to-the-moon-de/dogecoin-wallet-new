@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ import com.dogecoin.dogecoinj.core.Transaction.Purpose;
 import com.dogecoin.dogecoinj.core.TransactionConfidence;
 import com.dogecoin.dogecoinj.core.TransactionConfidence.ConfidenceType;
 import com.dogecoin.dogecoinj.core.Wallet;
+import com.dogecoin.dogecoinj.utils.ExchangeRate;
 import com.dogecoin.dogecoinj.utils.MonetaryFormat;
 import com.dogecoin.dogecoinj.wallet.DefaultCoinSelector;
 
@@ -362,7 +363,29 @@ public class TransactionsListAdapter extends BaseAdapter
 		rowValue.setTextColor(textColor);
 		rowValue.setAlwaysSigned(true);
 		rowValue.setFormat(format);
-		rowValue.setAmount(hasFee && rowExtendFee != null ? txCache.value.add(fee) : txCache.value);
+		final Coin value = hasFee && rowExtendFee != null ? txCache.value.add(fee) : txCache.value;
+		rowValue.setAmount(value);
+		rowValue.setVisibility(!value.isZero() ? View.VISIBLE : View.GONE);
+
+		// fiat value
+		final View rowExtendFiat = row.findViewById(R.id.transaction_row_extend_fiat);
+		if (rowExtendFiat != null)
+		{
+			final ExchangeRate exchangeRate = tx.getExchangeRate();
+			if (exchangeRate != null)
+			{
+				rowExtendFiat.setVisibility(View.VISIBLE);
+				final CurrencyTextView rowFiat = (CurrencyTextView) row.findViewById(R.id.transaction_row_fiat);
+				rowFiat.setAlwaysSigned(true);
+				rowFiat.setPrefixColor(colorInsignificant);
+				rowFiat.setFormat(Constants.LOCAL_FORMAT.code(0, Constants.PREFIX_ALMOST_EQUAL_TO + exchangeRate.fiat.getCurrencyCode()));
+				rowFiat.setAmount(exchangeRate.coinToFiat(txCache.value));
+			}
+			else
+			{
+				rowExtendFiat.setVisibility(View.GONE);
+			}
+		}
 
 		// message
 		final View rowExtendMessage = row.findViewById(R.id.transaction_row_extend_message);

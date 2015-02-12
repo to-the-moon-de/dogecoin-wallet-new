@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
-	<string name="toast_wallet_reset">Wallet was reset,\nwill take some time to recover</string>
+	<string name="toast_wallet_reset">Your wallet was reset!\nIt will take some time to recover.</string>
 	<string name="wallet_disclaimer_fragment_remind_safety">Use at your own risk. Read the &lt;u&gt;safety notes&lt;/u&gt;.</string>
 	<string name="wallet_disclaimer_fragment_remind_backup">You need to &lt;u&gt;back up your wallet&lt;/u&gt;!</string>
 	<string name="blockchain_state_progress_hours">%1$s, %2$d hours behind</string>
@@ -13,7 +13,7 @@
 	<string name="blockchain_state_progress_problem_storage">Synchronizing: Storage problem</string>
 	<string name="blockchain_state_progress_problem_network">Synchronizing: Network problem</string>
 	<string name="wallet_address_fragment_clipboard_msg">Dogecoin address copied to clipboard</string>
-	<string name="wallet_balance_fragment_too_much">This amount is quite high for carrying in your pocket, please move some to a safer place.</string>
+	<string name="wallet_balance_fragment_too_much">This amount is quite high for carrying in your pocket. Please move some to a safer place.</string>
 	<string name="wallet_balance_fragment_replaying">Balance is unavailable during replay.</string>
 	<string name="exchange_rates_activity_title">Exchange rates</string>
 	<string name="exchange_rates_fragment_empty_text">Could not load exchange rates.</string>
@@ -229,6 +229,10 @@
 	<string name="preferences_initiate_reset_summary">Reset blockchain, transactions and wallet balance. Replay will take a while.</string>
 	<string name="preferences_initiate_reset_dialog_message">Would you like to reset and replay the blockchain?\n\nThis will temporarily hide your wallet balance and remove transactions. Both will recover as blockchain sync progresses.</string>
 	<string name="preferences_initiate_reset_dialog_positive">Reset</string>
+	<string name="preferences_extended_public_key_title">Show xpub</string>
+	<string name="preferences_extended_public_key_summary">View the extended public key of your wallet, so it can be imported into other apps and services. Be careful: doing so will disclose your monetary privacy to that app.</string>
+	<string name="extended_public_key_fragment_title">Extended Public Key</string>
+	<string name="extended_public_key_fragment_share">Share xpub…</string>
 	<string name="preferences_exchange_title">Exchange</string>
 	<string name="preferences_exchange_summary">Select your preferred exchange rate provider.</string>
 	<string name="preferences_autosync">AutoSync</string>

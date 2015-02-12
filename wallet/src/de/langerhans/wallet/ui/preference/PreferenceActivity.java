@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,6 @@ package de.langerhans.wallet.ui.preference;
 
 import java.util.List;
 
-import android.app.ActionBar;
-import android.content.Intent;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import de.langerhans.wallet.Configuration;
@@ -32,14 +29,6 @@ import de.langerhans.wallet.R;
  */
 public final class PreferenceActivity extends android.preference.PreferenceActivity
 {
-	@Override
-	protected void onCreate(final Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-
-		final ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-	}
 
 	@Override
 	protected void onResume() {
@@ -48,7 +37,6 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
 			finish();
 		}
 	}
-
 	@Override
 	public void onBuildHeaders(final List<Header> target)
 	{

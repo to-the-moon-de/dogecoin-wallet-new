@@ -141,7 +141,7 @@
 			<build>
 				<plugins>
 					<plugin>
-		                <groupId>com.simpligility.maven.plugins</groupId>
+		                                <groupId>com.simpligility.maven.plugins</groupId>
 						<artifactId>android-maven-plugin</artifactId>
 						<configuration>
 							<release>true</release>
@@ -187,7 +187,7 @@
 						<phase>initialize</phase>
 						<configuration>
 							<srcDir>graphics</srcDir>
-							<srcIncludes>app_icon.svg</srcIncludes>
+							<srcIncludes>ic_app_color_48dp.svg</srcIncludes>
 							<destDir>${basedir}/res/drawable-hdpi/</destDir>
 							<width>72</width>
 							<height>72</height>
@@ -201,7 +201,7 @@
 						<phase>initialize</phase>
 						<configuration>
 							<srcDir>graphics</srcDir>
-							<srcIncludes>app_icon.svg</srcIncludes>
+							<srcIncludes>ic_app_color_48dp.svg</srcIncludes>
 							<destDir>${basedir}/res/drawable-xhdpi/</destDir>
 							<width>96</width>
 							<height>96</height>
@@ -215,7 +215,7 @@
 						<phase>initialize</phase>
 						<configuration>
 							<srcDir>graphics</srcDir>
-							<srcIncludes>app_icon.svg</srcIncludes>
+							<srcIncludes>ic_app_color_48dp.svg</srcIncludes>
 							<destDir>${basedir}/res/drawable-xxhdpi/</destDir>
 							<width>144</width>
 							<height>144</height>

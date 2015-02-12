@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ import javax.annotation.Nonnull;
 
 import com.dogecoin.dogecoinj.core.VersionedChecksummedBytes;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,9 +55,6 @@ public final class SweepWalletActivity extends AbstractBindServiceActivity
 		setContentView(R.layout.sweep_wallet_content);
 
 		getWalletApplication().startBlockchainService(false);
-
-		final ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

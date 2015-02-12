@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ public final class CurrencyAmountView extends FrameLayout
 		significantColor = resources.getColor(R.color.fg_significant);
 		lessSignificantColor = resources.getColor(R.color.fg_less_significant);
 		errorColor = resources.getColor(R.color.fg_error);
-		deleteButtonDrawable = resources.getDrawable(R.drawable.ic_input_delete);
+		deleteButtonDrawable = resources.getDrawable(R.drawable.ic_clear_grey600_24dp);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 the original author or authors.
+ * Copyright 2013-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,6 +113,11 @@ public final class CurrencyCalculatorLink
 		this.exchangeRate = exchangeRate;
 
 		update();
+	}
+
+	public ExchangeRate getExchangeRate()
+	{
+		return exchangeRate;
 	}
 
 	@CheckForNull
