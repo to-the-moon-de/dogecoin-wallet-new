@@ -1,4 +1,4 @@
-Welcome to _Dogecoin Wallet_, a standalone Dogecoin payment app for your Android device!
+Welcome to _Doschkoin Wallet_, a standalone Dogecoin payment app for your Android device "uff hessisch"!
 Forked from _Bitcoin Wallet_.
 
 This project contains several sub-projects:
