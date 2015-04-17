@@ -4,105 +4,105 @@
 	<string name="help_wallet">
 <![CDATA[
 		<p>
-			Im linken oberen Teil des Bildschirms wird dein aktuelles Guthaben in Dogecoin und einer ausgewählten Währung angezeigt.
-			Mit einem Tap darauf gelangst du in die Liste der verfügbaren Währungen, ein weiterer Tap auf eine der Währungen setzt sie als Standardwährung.
+			Im linke obere Teil des Bildschirms werd dei aktuelles Guthabbe in Doschkoin unn einer ausgewählten Währung angezeischt.
+			Mit aanem Tap daruff gelangst du in die Liste der verfüschbaren Währungen, aan weiterer Tap uff aane der Währungen setzt sie als Standardwährung.
 		</p>
 		<p>
-			Der QR-Code auf dem oberen rechten Teil des Displays enthält ebenfalls Deine Dogecoin-Adresse und kann von einem anderen Teilnehmer eingescannt werden.
-			Mit einem Tap auf den QR-Code wird dieser vergrößert.
+			Der QR-Kod uff dem oberen reschten Teil des Bildschirms enthält ebenfalls Dei Doschkoin-Adress unn kann von aanem anneren Teilnehmer eingeskennt wedde.
+			Mit aanem Tap uff den QR-Kod werd dieser vergrößert.
 		</p>
 		<p>
-			Im unteren Teil des Bildschirms wird die Transaktionsliste angezeigt, die anfangs leer ist.
-			Unbestätigte Transaktionen werden grau angezeigt, bis sie bestätigt sind.
-			Mit einem Tap auf einen Eintrag kann man die Sender- oder Empfängeradresse zum Adressbuch hinzufügen.
-			Mit einer Wischgeste nach links oder rechts werden die Anzeigefilter für die Transaktionsliste aktiviert.
+			Im unneren Teil des Bildschirms werd die Transaktionsliste angezeischt, die am Anfang natürlisch leer iss.
+			Unbestätigte Transaktione wedde grau angezeischt, bis sie bestätischt sinn.
+			Mit aanem Tap uff aanen Eintrach kann man die Sender- oder Empfängeradresse zum Adressbuch hinzufüsche.
+			Mit einer Wischgeste nach links oder reschts wedde die Anzeischefilter für die Transaktionsliste aktiviert.
 		</p>
 		<p>
-			In der Titelzeile finden sich Knöpfe zum Anfordern oder Versenden von Zahlungen.
-			Im Optionsmenü sind weitere Aktionen versteckt.
+			In der Titelzeile finnst Du Knöppesche zum Anfordere oder Versende von Zahlungen.
+			Im Optionsmenü sinn weitere Aktione versteckelt.
 		</p>
 	]]>
 	</string>
 	<string name="help_request_coins">
 <![CDATA[
 		<p>
-			In diesem Dialogfeld kann eine Zahlung von einem anderen Teilnehmer angefordert werden, der dafür Dogecoin Wallet auf seinem Gerät installiert haben sollte.
+			In diesem Dialochfeld kann aane Zahlung von aanem anneren Teilnehmer angefordert wedde, der dafür a Doschkoin Brieftasch uff seinem Gerät installiert haben sollte.
 		</p>
 		<p>
-			Dafür muss der angeforderte Betrag eingegeben werden.
+			Dafür muss der angeforderte Betrach eingegebbe wedde.
 		</p>
 		<p>
-			Der anschließend generierte QR-Code kann vom Sender eingescannt werden.
-			Alternativ kann die Zahlungsanforderung über die Aktionsleiste mit dem Teilen-Button verschickt werden.
-			Der Empfänger kann durch einen Tap auf die empfangene URL die Zahlung einleiten.
+			Der anschließend generierte QR-Kod kann vom Sender eingeskennt wedde.
+			Alternativ kann die Zahlungsanforderung über die Aktionsleiste mit dem Teile-Knöpfsche verschickt wedde.
+			Der Empfänger kann dorsch aanen Tap uff die empfangee URL die Zahlung los trete.
 		</p>
 		<p>
-			Bei beiden Varianten wird bei dem anderen Teilnehmer ein Zahlungsdialog geöffnet, bei dem sämtliche Felder bereits ausgefüllt sind.
-			Wenn alle Angaben korrekt sind, kann die Zahlung kann durch eine einfache Bestätigung ausgeführt werden.
+			Bei beiden Varianten werd bei dem anneren Teilnehmer aan Zahlungsdialog geöffnet, bei dem sämtlische Felder bereits ausgefüllt sinn.
+			Wenn alle Angaben korrekt sinn, kann die Zahlung dann dorsch aane einfache Bestätischung ausgeführt wedde.
 		</p>
 	]]>
 	</string>
 	<string name="help_send_coins">
 <![CDATA[
 		<p>
-			Dieses Dialogfeld wird geöffnet, wenn der Zahlungsprozess initiiert wurde.
-			Dies geschieht entweder durch einen Tap auf "Zahlung senden" auf der Startseite oder einen Tap auf eine Dogecoin-URL im mobilen Browser.
+			Dieses Dialogfeld werd geöffnet, wenn der Zahlungsprozess los getrete wordde iss.
+			Dess geschieht entweder dorsch aanen Tap uff "Zahlung sende" uff der Stattseit oder aanen Tap uff aane Doschkoin-URL im mobilen Brauser.
 		</p>
 		<p>
-			Im ersten Feld muss die Empfängeradresse eingegeben werden.
-			Wenn eine Adresse im Adressbuch gespeichert wurde, wird diese automatisch vervollständigt.
-			Es kann ebenfalls ein QR-Code mit Dogecoin-Adressen oder Zahlungsanforderungen eingescannt werden, indem man den QR-Button in der Aktionsleiste tappt.
+			Im erste Feld muss die Empfängeradress eingegebbe wedde.
+			Wenn aane Adress im Adressbuch gespeischert wurd, werd diese automatisch vervollständischt.
+			Es kann aach aan QR-Kod mit Doschkoin-Adressen oder Zahlungsanforderunge eingeskennt wedde, indem man uff den QR-Button in der Aktionsleiste tappe tut.
 		</p>
 		<p>
-			Im nächsten Feld wird das verschickbare Dogecoin-Guthaben angezeigt.
-			Falls dieses Guthaben vom angezeigten Guthaben auf der Hauptseite abweicht, sind noch nicht alle Transaktionen bestätigt.
+			Im nächsten Feld werd des verschickbare Doschkoin-Guthabbe angezeischt.
+			Falls dieses Guthabbe vom angezeischten Guthabbe uff der Hauptseite abweische tut, sinn noch nett alle Transaktione bestätischt wodde.
 		</p>
 		<p>
-			Anschließend kann der zu versendende Betrag eingegeben werden.
+			Anschließend kannste den Betrach den du versende wolle tust eingegebbe.
 		</p>
 		<p>
-			Eine Zahlung kann auch offline eingegeben werden.
-			Sie wird bei einem Neustart von Dogecoin Wallet ausgeführt.
-			Wenn eine Zahlung so schnell wie möglich bestätigt werden soll, ist eine gute Verbindung (z.B. über WLAN) vonnöten.
+			Aane Zahlung kann auch offline eingegebbe wedde.
+			Sie werd bei aanem Neustart von der Doschkoin Brieftasch ausgeführt.
+			Wenn aane Zahlung so schnell wie möschlisch bestätischt wedde soll, iss aane gute Verbindung (z.B. über WeLAN) erforderlisch.
 		</p>
 		<p>
-			Achtung:
-			Zahlungen sind irreversibel!
-			Die Empfängeradresse sollte deswegen vor Bestätigung der Zahlung unbedingt auf Richtigkeit überprüft werden.
+			Aaaaaachtung!:
+			Zahlungen kannste net rückgängisch mache!
+			Die Empfängeradresse musste desdewesche vor Bestätischung der Zahlung unbedingt uff Rischtigkeit prüfe.
 		</p>
 	]]>
 	</string>
 	<string name="help_safety">
 <![CDATA[
 		<p>
-			<b>Wichtige Sicherheitshinweise:</b>
+			<b>Wischtische Sischerheitshinweise:</b>
 		</p>
 		<p>
-			Dogecoins werden lokal auf dem Gerät gespeichert.
-			<b>Wenn das Gerät verloren geht, gehen alle Dogecoins verloren.</b>
+			Doschkoins wedde lokal uff daanem Gerät gespeischert.
+			<b>Wenn daan Gerät verloren geht, gehen alle Doschkoins den Bach nunner.</b>
 		</p>
 		<p>
-			Das bedeutet, <b>du musst dein Wallet sichern</b>!
-			Nutze dafür die Sicherungs-Funktion in der App anstatt einer externen Backup-App.
-			Hebe deine Sicherung gut auf und vergiß das Passwort nicht.
+			Des bedeutet, <b>du musst dei Brieftasch sischere</b>!
+			Nutze dafür die Sischerungs-Funktion in der Epp anstatt einer anneren Backup-Epp.
+			Hebe dei Sischerung gut uff unn vergiß des Passwott nett.
 		</p>
 		<p>
-			<b>Vor der Deinstallation</b> (oder dem Löschen der App-Daten/Formatierung des Geräts), <b>müssen alle Dogecoins auf ein anderes Wallet übertragen werden</b>.
-			Auf dem Gerät verbleibende Dogecoins gehen verloren.
+			<b>Vor der Deinstallation</b> (oder dem Löschen der Epp-Daten oder der Formatierung des Geräts), <b>müssen alle Doschkoins uff aan anderes Brieftasch übertrage wedde</b>.
+			Auf dem Gerät verbleibende Doschkoins gehen flöte.
 		</p>
 		<p>
-			<b>Zahlungen können nicht rückgängig gemacht werden</b>.
-			Wenn Dogecoins ins Unbekannte geschickt werden, gibt es kaum Möglichkeit, sie zurückzuholen.
+			<b>Zahlungen können nett rückgängisch gemacht wedde</b>.
+			Wenn Doschkoins ins nirvana geschickt wedde, gibt es kaum eine Möschlischkeit, sie zurückzuholen.
 		</p>
 		<p>
-			<b>Halte dein Mobilgerät sicher!</b>
-			Roote dein Gerät nicht.
-			Installiere nur Apps, denen du vollkommen vertraust.
-			Bösartige Apps könnten versuchen, die im Wallet gespeicherten Dogecoins zu stehlen.
+			<b>Halte dei Mobilgerät sischer!</b>
+			Roote dei Gerät nett, außer du weißt was de tust.
+			Installiere nur Epps, denen du vollkommen vertraust.
+			Bösartischee Epps könnten versuche, die in der Brieftasch gespeischerten Doschkoins zu klaue.
 		</p>
 		<p>
-			Minimiere das Risiko!
-			Speichere nur <b>Beträge für den täglichen Gebrauch</b>.
+			Minimiere dei Risiko!
+			Speischere nur <b>Beträge für den täglischen Gebrauch</b>.
 		</p>
 	]]>
 	</string>
